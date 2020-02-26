@@ -1,0 +1,67 @@
+.StocksTable {
+
+}
+
+.table {
+    width: 100%;
+    margin: 4px;
+}
+
+.table * {
+
+}
+
+.title {
+    display: flex;
+}
+
+.title div {
+    width: 200px;
+    text-align: center;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+}
+.date div {
+    width: 200px;
+}
+
+.adjClose {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.adjCloseCol {
+    display: flex;
+    flex-direction: row;
+}
+
+.adjCloseCol div {
+width: 200px;
+}
+
+
+.content {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.textDate {
+    font-size: 6px;
+}
+
+.textDate.green {
+    color: green;
+}
+
+.textDate.red {
+    color: red;
+}
+
+.dataCell {
+    margin: 6px 0;
+}

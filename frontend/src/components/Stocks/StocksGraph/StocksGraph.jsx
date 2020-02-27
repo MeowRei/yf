@@ -52,7 +52,7 @@ class StocksGraph extends Component {
     const avg =[];
     const stdev = [];
     
-    console.log(source);
+    // console.log(source);
     if (source.length > 1) {
        source.map(elem=>{
          avg.push(mean(elem))
@@ -79,7 +79,7 @@ class StocksGraph extends Component {
   
   render() {
     
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div className={classes.StocksGraph}>
       

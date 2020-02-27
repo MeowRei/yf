@@ -3,7 +3,7 @@ const User = require('./user');
 const cript = require ('bcryptjs');
 const saltRounds = cript.genSaltSync (10);
 
-mongoose.connect('mongodb+srv://yfasproject:bDnFp8YliGSqwbd0@yfas-lsvem.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://yfasproject:bDnFp8YliGSqwbd0@yfas-lsvem.mongodb.net', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -12,10 +12,10 @@ mongoose.connect('mongodb+srv://yfasproject:bDnFp8YliGSqwbd0@yfas-lsvem.mongodb.
 async function seedUser() {
   const newUser = new User({
     active: true,
-    username: 'Reiko',
-    password: await cript.hash('an0r1el', saltRounds),
-    surname:'Lirovskiy',
-    name:'Konstantin',
+    username: 'Marina',
+    password: await cript.hash('12344321', saltRounds),
+    surname:'-',
+    name:'Marina',
   });
   
   await newUser.save();

@@ -4,7 +4,6 @@ import Layout from './Layout/Layout';
 import SignIn from './components/SignIn/SignIn';
 import Mainpage from './containers/mainpage/mainpage';
 import Navbar from './containers/Navbar/Navbar';
-import SignUp from './components/SignUp/SignUp';
 import Loader from './containers/Loader/Loader';
 // const Cookies = require('js-cookie');
 
@@ -66,7 +65,6 @@ class App extends Component {
                         );
                       }}/>
                       <Switch>
-                        <Route path={'/registration'} component={SignUp}/>
                         <Route exact path={'/'} render={(props) => {
                           return (
                               <div>

@@ -6,7 +6,6 @@ const salt = cript.genSaltSync(10);
 
 router.get('/', function(req, res) {
     res.json(req.session);
-  
 });
 router.post('/logout', async function (req, res, next) {
     if (req.session.user) {

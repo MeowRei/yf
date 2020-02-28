@@ -159,7 +159,7 @@ class Stocks extends Component {
         </div>
         
         <div>
-          {this.state.data ? <div><StocksTable
+          {this.state.data ? <div className={classes.DetailsAndGraph}><StocksTable
             name={Object.keys(this.state.data)}
             value={Object.values(this.state.data)}
             delDate={this.delDate}

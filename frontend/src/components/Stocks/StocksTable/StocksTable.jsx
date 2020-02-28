@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import classes from './StocksTable.module.css';
-import StocksGraph from '../StocksGraph/StocksGraph';
 
 class StocksTable extends Component {
   
@@ -34,20 +33,11 @@ class StocksTable extends Component {
         <div className={classes.table}>
           
           <div className={classes.title}>
-            {/*<div>Date</div>*/}
             {this.props.name.map((elem, index) => {
               return (<div key={index}>{elem}</div>);
             })}
           </div>
           <div className={classes.content}>
-            
-            {/*<div className={classes.date}>*/}
-            {/*  {this.props.value[0].map((elem,index)=>{*/}
-            {/*    return(*/}
-            {/*      <div key={index}>{moment(elem.date).format('YYYY-MM-DD')}</div>*/}
-            {/*    )*/}
-            {/*  })}*/}
-            {/*  </div>*/}
             
             <div className={classes.adjCloseCol}>
               {this.props.value.map((elem, index1) => {
@@ -56,27 +46,35 @@ class StocksTable extends Component {
                     {elem.map((content, index2, array) => {
                       return (
                         <div key={index2} className={classes.dataCell}>
-                          <div className={classes.textDate}>
-                            {moment(content.date).format('YYYY-MM-DD')}
+                          <div>
+                            <div className={classes.textDate}>
+                              {moment(content.date).format('YYYY-MM-DD')}
+                            </div>
+                            <div>
+                              {Number.parseFloat(content.adjClose).toFixed(2)}
+                              {differColor(this.Difference(array, index2))}
+                            </div>
+                            <div className={differ.join(' ')}>
+                              {this.Difference(array, index2)}
+                            </div>
                           </div>
                           <div>
-                            {Number.parseFloat(content.adjClose).toFixed(2)}
-                            {differColor(this.Difference(array, index2))}
-                          </div>
-                          <div className={differ.join(' ')}>
-                            {this.Difference(array, index2)}
+                            <div onClick={this.props.delDate.bind(this, index2)}
+                                 className={classes.btnDel}> -
+                            </div>
                           </div>
                         </div>
                       );
                     })}
+                  
                   </div>
                 );
               })}
+            
             </div>
           </div>
         </div>
         <div>
-        <StocksGraph value={this.props.value} name={this.props.name}/>
         </div>
       </div>
     );

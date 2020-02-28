@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import classes from './Stocks.module.css';
 import StocksTable from './StocksTable/StocksTable';
+import StocksGraph from './StocksGraph/StocksGraph';
 
 class Stocks extends Component {
   constructor(props) {
@@ -86,13 +87,22 @@ class Stocks extends Component {
         symbol2: '',
         symbol3: '',
         symbol4: '',
-      }
+      },
     });
   };
   
-  
+  delDate = (dateId) => {
+    const data = this.state.data;
+    Object.values(data).map(elem =>
+      elem.splice(dateId, 1),
+    );
+    this.setState({
+      data,
+    });
+  };
   
   render() {
+    
     return (
       <div>
         <div>
@@ -112,7 +122,7 @@ class Stocks extends Component {
               placeholder="Enter stocks name 2"
               onChange={this.getSymbol}
             />
-  
+            
             <input
               type="text"
               name={'symbol3'}
@@ -144,15 +154,23 @@ class Stocks extends Component {
             </select>
             
             <button onClick={this.getStocksInfo}>Request</button>
-            
+          
           </div>
         </div>
         
         <div>
-          {this.state.data ? <StocksTable
+          {this.state.data ? <div><StocksTable
             name={Object.keys(this.state.data)}
             value={Object.values(this.state.data)}
-          /> : null}
+            delDate={this.delDate}
+          />
+          <StocksGraph
+            name={Object.keys(this.state.data)}
+            value={Object.values(this.state.data)}
+            />
+            </div>
+          : null}
+          
         </div>
       </div>);
   }

@@ -1,11 +1,27 @@
 import React, {Component} from 'react';
 import classes from './Analytics.css';
+import {
+  mean,
+  standardDeviation,
+  dispersion,
+  covariance,
+  mmult,
+  value1,
+  value2,
+  value3,
+  value4,
+} from './fromuls.jsx';
 
 class Analytics extends Component {
   constructor(props) {
     super(props);
     
-    this.state = {};
+    this.state = {
+      
+      prtf: [
+        1, 1, 1, 1,
+      ],
+    };
   }
   
   static getDerivedStateFromProps(props, state) {
@@ -28,61 +44,118 @@ class Analytics extends Component {
           temp.push(array[index].adjClose / array[index + 1].adjClose - 1);
         }
       });
-      source.push(temp)
+      source.push(temp);
     }
-    //------------------------------------------
     
-    /*Mkt Prtf*/
-    // Ось Х---------------------------------------------
-    function standardDeviation(arr) {
-      const task1 = arr.reduce((sum, elem) => sum + elem) / arr.length; // 1
-      const task2 = arr.map(elem => elem - task1); //2
-      const task3 = task2.map(elem => elem * elem); //3
-      const task4 = task3.reduce((sum, elem) => sum + elem); //4
-      const task5 = task4 / (arr.length - 1); //5
-      const task6 = Math.sqrt(task5);
-      return task6;
-    }
-    // Ось У--------------------------------------------
-    function mean(arr) {
-      const task1 = arr.reduce((sum, elem) => sum + elem) / arr.length;
-      return task1
-    }
-    /*END*/
-    const avg =[];
+    //--------------------------------------------------------------
+    const avg = [];
     const stdev = [];
+    const disper = [];
+    const vcm = [];
+    // const mm = [];
+    // const sd = [];
     
-    // console.log(source);
+    
+    source.map(elem => {
+      avg.push(mean(elem));
+    });
+    source.map(elem => {
+      stdev.push(standardDeviation(elem));
+    });
+    source.map(elem => {
+      disper.push(dispersion(elem));
+    });
+    
     if (source.length > 1) {
-       source.map(elem=>{
-         avg.push(mean(elem))
-      });
-      source.map(elem=>{
-        stdev.push(standardDeviation(elem))
-      });
-    } else {
-     avg.push(mean(source[0]));
-     stdev.push(standardDeviation(source[0]));
+      for (let i = 0; i < source.length; i++) {
+        let task1 = [];
+        for (let j = 0; j < source.length; j++) {
+          if (j !== i) {
+            task1.push(covariance(source[i], source[j]));
+          } else {
+            task1.push(dispersion(source[i]));
+          }
+        }
+        vcm.push(task1);
+      }
     }
+
+    const variant2 = [
+      [0.005615179, -0.004727057, 0.001078098, 0.0008552],
+      [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
+      [0.001078098, 0.000753167, 0.001031119, 0.001278456],
+      [0.0008552, 0.003287635, 0.001278456, 0.006159359],
+    ];
     
+    // if (vcm.length > 1) {
+    //   const task1 = (mmult(variant1, variant2));
+    //   const task2 = mmult(variant1, task1);
+    //   mm.push(Number.parseFloat(task2).toFixed(4));
+    //   sd.push(Number.parseFloat(Math.sqrt(task2)).toFixed(4));
+    // }
+    //--------------------------------------------------------------
+    
+    //--------------------------------------------------------------
     /*Expected Returns*/
     
     //Set state-----------------------------------
     return {
-      ...state, ...{source: source, avg: avg, stdev: stdev},
+      ...state, ...{
+        source,
+        avg,
+        stdev,
+        disper,
+        vcm,
+        // mm,
+        // sd,
+        variant2,
+      },
     };
   }
   
-  componentDidMount() {
-  
-  }
+  showResult = () => {
+    //шаг 1
+    
+    const tempArr = [1, 0, 0, 0];
+    
+    if (tempArr.length < this.state.variant2.length) {
+      for (let i = tempArr.length; i <
+      this.state.variant2.length; i = tempArr.length) {
+        tempArr.push(0);
+      }
+    } else if (tempArr.length > this.state.variant2.length) {
+      tempArr.splice(this.state.variant2.length, tempArr.length);
+    }
+    
+    
+    //шаг 2
+    // работа с переменными
+    
+    if (this.state.variant2.length > 1) {
+      //шаг 2.1
+      // c одной переменной
+      const one = value1(tempArr, this.state.variant2);
+      
+      // шаг 2.2
+      // c двумя переменными
+      const two = value2(tempArr, this.state.variant2);
+      
+      // шаг 2.3
+      // с тремя переменными
+      const three = value3(tempArr, this.state.variant2);
+      // шаг 2.4
+      // с четырьмя переменными
+      const four = value4(tempArr, this.state.variant2);
+      console.log(three);
+    }
+  };
   
   render() {
     
-    // console.log(this.state);
+    console.log(this.state);
     return (
       <div className={classes.Analytics}>
-      
+        <div className="analytic" onClick={this.showResult}>Go!</div>
       </div>
     );
   }

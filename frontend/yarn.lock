@@ -1252,6 +1252,18 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
+"@plotex/chart-def@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@plotex/chart-def/-/chart-def-1.0.1.tgz#95e2fb9af8f28bc0c3ad5a09225cfd32fc02ab38"
+  integrity sha512-mMDFaUYRA79Ba2yPgULoR1pTq4/fNlOCB+DXUHtj6anTo60nYK6ruSxewOKgidY4L9QvpEOEyYJWRU/ADuUIcQ==
+  dependencies:
+    "@plotex/serialization" "^1.0.1"
+
+"@plotex/serialization@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@plotex/serialization/-/serialization-1.0.1.tgz#ed9ae833a26fa82d54f4529a398ac146d973a3bf"
+  integrity sha512-1I4O0yg9YeoXiRPWkDiqG04MeclgBe7+zqTFJF//tc32FSZTch/DTorp9xFgNkGd5HdEHlol+/OiyHV6lQv66w==
+
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
@@ -5552,6 +5564,11 @@ is-accessor-descriptor@^1.0.0:
   dependencies:
     kind-of "^6.0.0"
 
+is-any-array@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/is-any-array/-/is-any-array-0.0.3.tgz#cbdd8c7189d47b53b050969245f4ef7e55550b9b"
+  integrity sha512-Lr5SRykZv6uuYMZURz7+YpigT1ziTBHOTgFJ1zK7gL+9Wbet5Ha1ws6S84Jo/lH4zep02b95sk6o4+MTk97mPQ==
+
 is-arguments@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.0.4.tgz#3faf966c7cba0ff437fb31f6250082fcf0448cf3"
@@ -7061,6 +7078,43 @@ mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
+ml-array-max@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ml-array-max/-/ml-array-max-1.1.2.tgz#ac14a4954ebdb9f401774cc1572fce439e12f94d"
+  integrity sha512-it2hYUSuYEwIRO6hjTWfe6gbGutF4Tuct7jxt3LiLE4wKFs6ku5FLNIRKtOL2jyH+Jdwt1ddbqKMX8inBM8RxA==
+  dependencies:
+    is-any-array "^0.0.3"
+
+ml-array-min@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ml-array-min/-/ml-array-min-1.1.2.tgz#a084370fe78998a4131d566d066ee01bccce253a"
+  integrity sha512-92QzvsyK7TxGz618pno6bu0LXYcRKssbimP85qRllk2xX5Z4gnVxlOmrMjSerUut9zzbt1eQB4byXNCwT0vgwA==
+  dependencies:
+    is-any-array "^0.0.3"
+
+ml-array-rescale@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/ml-array-rescale/-/ml-array-rescale-1.2.2.tgz#288aefd3bef104be6bee72b18db90969d10262b6"
+  integrity sha512-Ijo4LegOUIQjv231y8g2/n9vyKA/CczJz3pR+zZ0TeZrqEVRs1uW4AjpbkN/01QplTI46ranMJa51L0g3VbQEg==
+  dependencies:
+    is-any-array "^0.0.3"
+    ml-array-max "^1.1.2"
+    ml-array-min "^1.1.2"
+
+ml-levenberg-marquardt@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ml-levenberg-marquardt/-/ml-levenberg-marquardt-2.0.0.tgz#31be7229e25ed51362b13fb1970a1c54b8849c5c"
+  integrity sha512-uQFXCkXEfv4Heie9mJaIqm0XJmy+Y38pGgcgFuxL5rIzLIWbmpYiJ9r6NPI4aDOKkF9qI+bZ7KxBsjiLZEJ8ow==
+  dependencies:
+    ml-matrix "^6.1.2"
+
+ml-matrix@^6.1.2:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/ml-matrix/-/ml-matrix-6.4.1.tgz#388082df1584b34ffe14e26115dbc5f0f3312ff1"
+  integrity sha512-YZ6lLRhk80B2zJSC0bKocnHbpxCdXFKWb6A7QTDztf5ob2qL1g/5AYNAuDtCQgbZtW1wwFZbjXbDgk/UdiO3Uw==
+  dependencies:
+    ml-array-rescale "^1.2.2"
+
 moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -7939,6 +7993,15 @@ pkg-up@2.0.0:
   integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
   dependencies:
     find-up "^2.1.0"
+
+plot@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/plot/-/plot-1.0.1.tgz#eda0d66f42dd30a44885795ba9b642607f6b9925"
+  integrity sha512-hHTa9i+21sUmT2Q64+nSWWpfifxruLhN/Z3MNcRoHeqWFJpiRvGO8KJEPVdobwRgcoQ8Wnv8hrPTS4Rnkbgcuw==
+  dependencies:
+    "@plotex/chart-def" "^1.0.1"
+    "@plotex/serialization" "^1.0.1"
+    typy "3.0.1"
 
 pn@^1.1.0:
   version "1.1.0"
@@ -10664,6 +10727,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typy@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/typy/-/typy-3.0.1.tgz#a191a4a35ccd5f1e6784c8390f1df6bd1227ea7c"
+  integrity sha512-PidJ28Ajon6yZdMmvymKvIqSR1bSOGF/VqCO6jwjy49rz4IrHUv82gpfid6veioyg2mqruhpZ26YGLPpU39zJA==
 
 uglify-js@3.4.x:
   version "3.4.10"

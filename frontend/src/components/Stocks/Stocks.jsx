@@ -3,6 +3,7 @@ import moment from 'moment';
 import classes from './Stocks.module.css';
 import StocksTable from './StocksTable/StocksTable';
 import StocksGraph from './StocksGraph/StocksGraph';
+import Analytics from './Analytics/Analytics';
 
 class Stocks extends Component {
   constructor(props) {
@@ -163,10 +164,16 @@ class Stocks extends Component {
             name={Object.keys(this.state.data)}
             value={Object.values(this.state.data)}
             delDate={this.delDate}
+            period={this.state.period}
           />
           <StocksGraph
             name={Object.keys(this.state.data)}
             value={Object.values(this.state.data)}
+            period={this.state.period}
+            />
+            <Analytics
+              name={Object.keys(this.state.data)}
+              value={Object.values(this.state.data)}
             />
             </div>
           : null}

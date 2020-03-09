@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis} from 'recharts';
-// import moment from 'moment';
+import moment from 'moment';
+// import classes from './StocksGraph.module.css'
 
 class StocksGraph extends Component {
   constructor(props) {
@@ -13,15 +14,36 @@ class StocksGraph extends Component {
   }
   
   render() {
-    
+
 
     return (
       <div>
         {this.props.value && this.props.value.map((elem,index) => {
           const date02 = [...elem];
-        return (
+  
+          if (this.props.period === 'm' &&
+            (Object.values(date02[0])[0][8] !== '0' ||
+              Object.values(date02[0])[0][9] !== '1')) {
+            date02.splice(0,1)
+          }
+          
+          // console.log(Object.values(date02[0])[0][8],Object.values(date02[0])[0][9]);
+          // console.log(date02.splice(0,1));
+          // console.log(date02);
+          date02.map((content, index)=>{
+            if (this.props.period === 'm') {
+              content['date'] = moment(Object.values(content)[0]).format('MM')
+            } else if (this.props.period === 'w') {
+              content['date'] = moment(Object.values(content)[0]).format('MM')
+            } else {
+              content['date'] = moment(Object.values(content)[0]).format('MM-DD')
+            }
+            }
+          );
+          return (
           <LineChart
-            width={400} height={200} data={date02.reverse()}
+            width={420} height={200} data={date02.reverse()}
+            // width={420} height={200} data={date02}
             margin={{ top: 40, right: 40, bottom: 20, left: 20 }}
             key={index}
           >

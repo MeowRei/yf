@@ -41,6 +41,13 @@ class StocksTable extends Component {
             
             <div className={classes.adjCloseCol}>
               {this.props.value.map((elem, index1) => {
+                
+                // if (this.props.period === 'm' &&
+                //   (Object.values(elem[0])[0][8] !== '0' ||
+                //     Object.values(elem[0])[0][9] !== '1')) {
+                //   elem.splice(0,1)
+                // }
+                
                 return (
                   <div key={index1} className={classes.adjClose}>
                     {elem.map((content, index2, array) => {

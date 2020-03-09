@@ -9,7 +9,9 @@ import {
   value1,
   value2,
   value3,
-  value4,
+  value31,
+  value32,
+  value33,
 } from './fromuls.jsx';
 
 class Analytics extends Component {
@@ -17,10 +19,10 @@ class Analytics extends Component {
     super(props);
     
     this.state = {
-      
-      prtf: [
-        1, 1, 1, 1,
-      ],
+      sdE: 0,
+      sdM: 0,
+      sdH: 0,
+      sdHtest:[],
     };
   }
   
@@ -55,7 +57,6 @@ class Analytics extends Component {
     // const mm = [];
     // const sd = [];
     
-    
     source.map(elem => {
       avg.push(mean(elem));
     });
@@ -79,12 +80,12 @@ class Analytics extends Component {
         vcm.push(task1);
       }
     }
-
+    
     const variant2 = [
       [0.005615179, -0.004727057, 0.001078098, 0.0008552],
       [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
       [0.001078098, 0.000753167, 0.001031119, 0.001278456],
-      [0.0008552, 0.003287635, 0.001278456, 0.006159359],
+      // [0.0008552, 0.003287635, 0.001278456, 0.006159359],
     ];
     
     // if (vcm.length > 1) {
@@ -113,49 +114,116 @@ class Analytics extends Component {
     };
   }
   
-  showResult = () => {
+  showResultE = () => {
     //шаг 1
     
     const tempArr = [1, 0, 0, 0];
     
-    if (tempArr.length < this.state.variant2.length) {
+    if (tempArr.length < this.state.vcm.length) {
       for (let i = tempArr.length; i <
-      this.state.variant2.length; i = tempArr.length) {
+      this.state.vcm.length; i = tempArr.length) {
         tempArr.push(0);
       }
-    } else if (tempArr.length > this.state.variant2.length) {
-      tempArr.splice(this.state.variant2.length, tempArr.length);
+    } else if (tempArr.length > this.state.vcm.length) {
+      tempArr.splice(this.state.vcm.length, tempArr.length);
     }
     
+    const one = value1(tempArr, this.state.vcm);
+    this.setState({
+      sdE: one,
+    });
     
-    //шаг 2
-    // работа с переменными
+  };
+  
+  showResultM = () => {
+    const tempArr = [1, 0, 0, 0];
     
-    if (this.state.variant2.length > 1) {
-      //шаг 2.1
-      // c одной переменной
-      const one = value1(tempArr, this.state.variant2);
-      
-      // шаг 2.2
-      // c двумя переменными
-      const two = value2(tempArr, this.state.variant2);
-      
-      // шаг 2.3
-      // с тремя переменными
-      const three = value3(tempArr, this.state.variant2);
-      // шаг 2.4
-      // с четырьмя переменными
-      const four = value4(tempArr, this.state.variant2);
-      console.log(three);
+    if (tempArr.length < this.state.vcm.length) {
+      for (let i = tempArr.length; i <
+      this.state.vcm.length; i = tempArr.length) {
+        tempArr.push(0);
+      }
+    } else if (tempArr.length > this.state.vcm.length) {
+      tempArr.splice(this.state.vcm.length, tempArr.length);
     }
+    const two = value2(tempArr, this.state.vcm);
+    this.setState({
+      sdM: two,
+    });
+  };
+  
+  showResultH = () => {
+    const three1 = value31(this.state.vcm);
+    const three2 = value32(this.state.vcm);
+    const three3 = value33(this.state.vcm);
+    
+    function min(arr1, arr2, arr3) {
+      const all = [arr1, arr2, arr3];
+      const allMinSd = [arr1[0].sd, arr2[0].sd, arr3[0].sd];
+      const iMin = allMinSd.indexOf(
+        Math.min(arr1[0].sd, arr2[0].sd, arr3[0].sd));
+      return all[iMin];
+    }
+    
+    function max(arr1, arr2, arr3) {
+      const all = [arr1, arr2, arr3];
+      const allMinSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd];
+      const iMax = allMinSd.indexOf(
+        Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd));
+      return all[iMax];
+    }
+    
+    const threeMin = min(three1, three2, three3);
+    const threeMax = max(three1, three2, three3);
+    
+    this.setState({
+      sdH: [threeMin[0], threeMax[1]],
+      sdHtest: [three1,three2,three3]
+    });
+    
   };
   
   render() {
-    
-    console.log(this.state);
+    // console.log(this.props);
+    // console.log(this.state);
     return (
       <div className={classes.Analytics}>
-        <div className="analytic" onClick={this.showResult}>Go!</div>
+        {/*<div>*/}
+        {/*  <div className="analytic" onClick={this.showResultE}>Analytics Easy!*/}
+        {/*  </div>*/}
+        {/*  <div>Min: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].sd}</p> : this.state.sdE}</div>*/}
+        {/*  <div>Max: {this.state.sdE !== 0 ? <p>{this.state.sdE[1].sd}</p> : this.state.sdE}</div>*/}
+        {/*  <div>Buy {this.props.name[0]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[0]}</p> : this.state.sdE} </div>*/}
+        {/*  <div>Buy {this.props.name[1]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[1]}</p> : this.state.sdE} </div>*/}
+        {/*  <div>Buy {this.props.name[2]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[2]}</p> : this.state.sdE} </div>*/}
+        {/*</div>*/}
+        <hr/>
+  
+        <div>
+          <div className="analytic" onClick={this.showResultM}>Analytics
+            Medium! (click me)
+          </div>
+          <div>Min: {this.state.sdM !== 0 ? this.state.sdM[0].sd : this.state.sdM}</div>
+          <div>Max: {this.state.sdM !== 0 ? this.state.sdM[1].sd : this.state.sdM}</div>
+          <div>Buy {this.props.name[0]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[0] : this.state.sdM} </div>
+          <div>Buy {this.props.name[1]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[1] : this.state.sdM} </div>
+          <div>Buy {this.props.name[2]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[2] : this.state.sdM} </div>
+          <div>Buy {this.props.name[3]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[3] : this.state.sdM} </div>
+        </div>
+        <hr/>
+        Hard is testing! work only with 3 stock! Time wait - 2min!
+        <hr/>
+        <div>
+          <div className="analytic" onClick={this.showResultH}>Analytics Hard! (click me)
+          </div>
+          <div>Min: {this.state.sdH !== 0 ? this.state.sdH[0].sd : this.state.sdH}</div>
+          <div>Max: {this.state.sdH !== 0 ? this.state.sdH[1].sd : this.state.sdH}</div>
+          <div>Buy {this.props.name[0]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[0] : this.state.sdH} </div>
+          <div>Buy {this.props.name[1]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[1] : this.state.sdH} </div>
+          <div>Buy {this.props.name[2]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[2] : this.state.sdH} </div>
+          <div>Buy {this.props.name[3]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[3] : this.state.sdH} </div>
+        </div>
+      
       </div>
     );
   }

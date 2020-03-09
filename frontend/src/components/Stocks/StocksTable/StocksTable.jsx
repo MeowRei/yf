@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import classes from './StocksTable.module.css';
+import Analytics from '../Analytics/Analytics';
 
 class StocksTable extends Component {
   
@@ -27,7 +28,7 @@ class StocksTable extends Component {
         differ.push(classes.red);
       }
     }
-    
+    // console.log(this.props.name)
     return (
       <div>
         <div className={classes.table}>
@@ -75,13 +76,15 @@ class StocksTable extends Component {
                     })}
                   
                   </div>
+                  
                 );
               })}
-            
             </div>
           </div>
-        </div>
-        <div>
+          <Analytics
+            name={Object.values(this.props.name)}
+            value={Object.values(this.props.value)}
+          />
         </div>
       </div>
     );

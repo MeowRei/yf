@@ -231,7 +231,7 @@ class Analytics extends Component {
   
   render() {
     // console.log(1);
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div >
         <hr/>

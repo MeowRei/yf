@@ -95,8 +95,8 @@ class Stocks extends Component {
   
   delDate = (dateId) => {
     const data = this.state.data;
-    console.log(data);
-    console.log(dateId);
+    // console.log(data);
+    // console.log(dateId);
     Object.values(data).map(elem =>
       elem.splice(dateId, 1),
     );

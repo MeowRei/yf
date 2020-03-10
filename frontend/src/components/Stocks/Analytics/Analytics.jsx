@@ -26,7 +26,7 @@ class Analytics extends Component {
       sdHtest: [],
       sdL: 0,
       sdLtest: [],
-      sd: 0
+      sd: 0,
     };
   }
   
@@ -60,13 +60,13 @@ class Analytics extends Component {
     const vcm = [];
     
     source.map(elem =>
-      avg.push(mean(elem))
+      avg.push(mean(elem)),
     );
     source.map(elem =>
-      stdev.push(standardDeviation(elem))
+      stdev.push(standardDeviation(elem)),
     );
     source.map(elem =>
-      disper.push(dispersion(elem))
+      disper.push(dispersion(elem)),
     );
     
     if (source.length > 1) {
@@ -87,7 +87,7 @@ class Analytics extends Component {
     //   [0.005615179, -0.004727057, 0.001078098, 0.0008552],
     //   [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
     //   [0.001078098, 0.000753167, 0.001031119, 0.001278456],
-      // [0.0008552, 0.003287635, 0.001278456, 0.006159359],
+    // [0.0008552, 0.003287635, 0.001278456, 0.006159359],
     // ];
     
     // if (vcm.length > 1) {
@@ -112,20 +112,19 @@ class Analytics extends Component {
       },
     };
   }
-
-  showRes = () => {
   
+  showRes = () => {
     
     if (this.state.vcm.length === 2) {
-    this.showResultM()
+      this.showResultM();
     }
-  
+    
     if (this.state.vcm.length === 3) {
-      this.showResultH()
+      this.showResultH();
     }
     
     if (this.state.vcm.length === 4) {
-    this.showResultL()
+      this.showResultL();
     }
     
   };
@@ -184,14 +183,14 @@ class Analytics extends Component {
   };
   
   showResultL = () => {
-  
+    
     if (this.state.vcm.length === 4) {
-  
+      
       const four1 = value41(this.state.vcm);
       const four2 = value42(this.state.vcm);
       const four3 = value43(this.state.vcm);
       const four4 = value44(this.state.vcm);
-  
+      
       function min(arr1, arr2, arr3, arr4) {
         const all = [arr1, arr2, arr3, arr4];
         const allMinSd = [arr1[0].sd, arr2[0].sd, arr3[0].sd, arr4[0].sd];
@@ -199,7 +198,7 @@ class Analytics extends Component {
           Math.min(arr1[0].sd, arr2[0].sd, arr3[0].sd, arr4[0].sd));
         return all[iMin];
       }
-  
+      
       function max(arr1, arr2, arr3, arr4) {
         const all = [arr1, arr2, arr3, arr4];
         const allMaxSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd];
@@ -207,10 +206,10 @@ class Analytics extends Component {
           Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd));
         return all[iMax];
       }
-  
+      
       const fourMin = min(four1, four2, four3, four4);
       const fourMax = max(four1, four2, four3, four4);
-  
+      
       this.setState({
         sd: [fourMin[0], fourMax[1]],
         sdLtest: [four1, four2, four3, four4],
@@ -227,39 +226,62 @@ class Analytics extends Component {
       sdHtest: [],
       sdL: 0,
       sdLtest: [],
-    })
+    });
   };
   
   render() {
     // console.log(1);
-    // console.log(this.state);
+    console.log(this.state);
     return (
-      <div className={classes.Analytics}>
+      <div >
         <hr/>
-        {/*<div>*/}
-        {/*  <div className="analytic" onClick={this.showRes}>Analytics*/}
-        {/*    Medium! (click me)*/}
-        {/*  </div>*/}
-        {/*  <div>Min: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].sd*/}
-        {/*    : this.state.sd}</div>*/}
-        {/*  <div>Max: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[1].sd*/}
-        {/*    : this.state.sd}</div>*/}
-        {/*  <div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[0]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[1]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[2]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[3]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*</div>*/}
-        Analytics! Time wait ~ 13sec!
+        Matrix
+        <div className={classes.Analytics}>
+          {this.state.vcm.length >= 2 ?
+            <table>
+              <thead>
+              <tr>
+                <th></th>
+                <th>{this.props.name[0]}</th>
+                <th>{this.props.name[1]}</th>
+                <th>{this.props.name[2]}</th>
+                <th>{this.props.name[3]}</th>
+              </tr>
+              </thead>
+              <tbody>
+              
+              <tr>
+                <td>{this.props.name[0]}</td>
+                <td>{this.state.vcm[0][0] ? this.state.vcm[0][0] : null}</td>
+                <td>{this.state.vcm[0][1] ? this.state.vcm[0][1] : null}</td>
+                <td>{this.state.vcm.length >=3 ? this.state.vcm[0][2] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[0][3] : null}</td>
+              </tr>
+              <tr>
+                <td>{this.props.name[1]}</td>
+                <td>{this.state.vcm[1][0] ? this.state.vcm[1][0] : null}</td>
+                <td>{this.state.vcm[1][1] ? this.state.vcm[1][1] : null}</td>
+                <td>{this.state.vcm.length >=3 ? this.state.vcm[1][2] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[1][3] : null}</td>
+              </tr>
+              <tr>
+                <td>{this.props.name[2]}</td>
+                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][0] : null}</td>
+                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][1] : null}</td>
+                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][2] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[2][3] : null}</td>
+              </tr>
+              <tr>
+                <td>{this.props.name[3]}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][0] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][1] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][2] : null}</td>
+                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][3] : null}</td>
+              </tr>
+              </tbody>
+            </table>
+            : null}
+        </div>
         <hr/>
         <div>
           <div className="analytic" onClick={this.showRes}>

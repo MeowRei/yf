@@ -286,30 +286,33 @@ function value31(arr) {
     prtf: [],
   };
   const mainArr = [0.0001, 0.0001, 0.9997];
-  let tempArr = [...mainArr];
-  for (let i = 0; i < 1 - 0.0001; i = i + 0.0001) {
-      for (let k = 0; k < 1 - 0.0002; k = k + 0.0001) {
-        const task1 = (mmult(tempArr, arr));
-        const task2 = mmult(tempArr, task1);
-        const task3 = Math.sqrt(task2); //SD
-        if (min.sd > task3) {
-          min.variance = task2;
-          min.sd = task3;
-          min.prtf = [...tempArr];
-        }
   
-        if (max.sd < task3) {
-          max.variance = task2;
-          max.sd = task3;
-          max.prtf = [...tempArr];
-        }
-        tempArr = [...mainArr];
-        tempArr[0] = tempArr[0] + 0.0001;
-        tempArr[2] = tempArr[2] - 0.0001;
+  let tempArr = [...mainArr];
+  
+  for (let i = 0; i < 1 - 0.0001; i = i + 0.0001) {
+    let workArr = [...tempArr];
+    for (let k = 0; k < workArr[2] - workArr[0]; k = k + 0.0001) {
+      const task1 = (mmult(workArr, arr));
+      const task2 = mmult(workArr, task1);
+      const task3 = Math.sqrt(task2); //SD
+      
+      if (min.sd > task3) {
+        min.variance = task2;
+        min.sd = task3;
+        min.prtf = [...workArr];
       }
-    tempArr = [...mainArr];
-    tempArr[1] = tempArr[1] + 0.0001;
+      
+      if (max.sd < task3) {
+        max.variance = task2;
+        max.sd = task3;
+        max.prtf = [...workArr];
+      }
+      workArr[1] = workArr[1] + 0.0001;
+      workArr[2] = workArr[2] - 0.0001;
+    }
+    tempArr[0] = tempArr[0] + 0.0001;
     tempArr[2] = tempArr[2] - 0.0001;
+    
   }
   return [min, max];
 }
@@ -327,31 +330,34 @@ function value32(arr) {
     sd: 0,
     prtf: [],
   };
-  const mainArr = [0.0001,0.9997, 0.0001 ];
+  const mainArr = [0.0001, 0.9997, 0.0001];
+  
   let tempArr = [...mainArr];
+  
   for (let i = 0; i < 1 - 0.0001; i = i + 0.0001) {
-    for (let k = 0; k < 1 - 0.0002; k = k + 0.0001) {
-      const task1 = (mmult(tempArr, arr));
-      const task2 = mmult(tempArr, task1);
+    let workArr = [...tempArr];
+    for (let k = 0; k < workArr[1] - workArr[2]; k = k + 0.0001) {
+      const task1 = (mmult(workArr, arr));
+      const task2 = mmult(workArr, task1);
       const task3 = Math.sqrt(task2); //SD
+      
       if (min.sd > task3) {
         min.variance = task2;
         min.sd = task3;
-        min.prtf = [...tempArr];
+        min.prtf = [...workArr];
       }
-  
+      
       if (max.sd < task3) {
         max.variance = task2;
         max.sd = task3;
-        max.prtf = [...tempArr];
+        max.prtf = [...workArr];
       }
-      tempArr = [...mainArr];
-      tempArr[0] = tempArr[0] + 0.0001;
-      tempArr[1] = tempArr[1] - 0.0001;
+      workArr[0] = workArr[0] + 0.0001;
+      workArr[1] = workArr[1] - 0.0001;
     }
-    tempArr = [...mainArr];
     tempArr[2] = tempArr[2] + 0.0001;
     tempArr[1] = tempArr[1] - 0.0001;
+    
   }
   return [min, max];
 }
@@ -376,17 +382,17 @@ function value33(arr) {
   
   for (let i = 0; i < 1 - 0.0001; i = i + 0.0001) {
     let workArr = [...tempArr];
-    for (let k = 0; k < 1 - 0.0002; k = k + 0.0001) {
+    for (let k = 0; k < workArr[0] - workArr[1]; k = k + 0.0001) {
       const task1 = (mmult(workArr, arr));
       const task2 = mmult(workArr, task1);
       const task3 = Math.sqrt(task2); //SD
-  
+      
       if (min.sd > task3) {
         min.variance = task2;
         min.sd = task3;
         min.prtf = [...workArr];
       }
-  
+      
       if (max.sd < task3) {
         max.variance = task2;
         max.sd = task3;
@@ -398,7 +404,73 @@ function value33(arr) {
     // tempArr = [...mainArr];
     tempArr[1] = tempArr[1] + 0.0001;
     tempArr[0] = tempArr[0] - 0.0001;
-    viewArr.push(tempArr)
+    viewArr.push(tempArr);
+    
+  }
+  // console.log(viewArr);
+  return [min, max];
+}
+let count = 0;
+function tt(arr) {
+  if (count < 11000) {
+    console.log(arr)
+  }
+  count++
+}
+
+function value41(arr) {
+  
+  const min = {
+    variance: 0,
+    sd: 5000,
+    prtf: [],
+  };
+  
+  const max = {
+    variance: 0,
+    sd: 0,
+    prtf: [],
+  };
+  const viewArr = [];
+  const mainArr = [0.9997, 0.0001, 0.0001, 0.0001];
+  
+  let tempArr = [...mainArr];
+  
+  for (let i = 0; i < 1 - 0.0001; i = i + 0.0001) {
+    let workArr = [...tempArr];
+    for (let k = 0; k < workArr[0] - workArr[1] - workArr[2]; k = k + 0.0001) {
+      let simpleArr = [...workArr];
+      for (let j = 0; j < simpleArr[0] - (simpleArr[1] + simpleArr[2]); j = j + 0.0001) {
+        
+        // const task1 = (mmult(simpleArr, arr));
+        // const task2 = mmult(simpleArr, task1);
+        // const task3 = Math.sqrt(task2); //SD
+        //
+        // if (min.sd > task3) {
+        //   min.variance = task2;
+        //   min.sd = task3;
+        //   min.prtf = [...simpleArr];
+        // }
+        //
+        // if (max.sd < task3) {
+        //   max.variance = task2;
+        //   max.sd = task3;
+        //   max.prtf = [...simpleArr];
+        // }
+        simpleArr[3] = simpleArr[3] + 0.0001;
+        simpleArr[0] = simpleArr[0] - 0.0001;
+      }
+      
+      workArr[2] = workArr[2] + 0.0001;
+      workArr[0] = workArr[0] - 0.0001;
+  
+    }
+    // tempArr = [...mainArr];
+    tempArr[1] = tempArr[1] + 0.0001;
+    tempArr[0] = tempArr[0] - 0.0001;
+    // viewArr.push(tempArr)
+    // tt(tempArr);
+  
   
   }
   // console.log(viewArr);
@@ -414,5 +486,5 @@ export {
   value1,
   value2,
   value3,
-  value31,  value32,  value33,
+  value31, value32, value33, value41
 };

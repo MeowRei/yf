@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const cript = require ('bcryptjs');
-const salt = cript.genSaltSync(10);
+// const salt = cript.genSaltSync(10);
 
 router.get('/', function(req, res) {
     res.json(req.session);
@@ -24,10 +24,10 @@ router.post('/logout', async function (req, res, next) {
 
 router.post('/', async function (req, res) {
     const { username, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const checkUser = await User.findOne ({ username });
-    console.log(checkUser);
-    console.log((await cript.compare (password, checkUser.password).then(data=>data)))
+    // console.log(checkUser);
+    // console.log((await cript.compare (password, checkUser.password).then(data=>data)))
     if (
       checkUser !== undefined &&
       (await cript.compare (password, checkUser.password).then(data=>data))

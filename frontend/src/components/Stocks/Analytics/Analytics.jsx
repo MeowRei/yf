@@ -12,6 +12,7 @@ import {
   value31,
   value32,
   value33,
+  value41,
 } from './fromuls.jsx';
 
 class Analytics extends Component {
@@ -150,9 +151,16 @@ class Analytics extends Component {
     this.setState({
       sdM: two,
     });
+    
+    
+
   };
   
   showResultH = () => {
+    
+    if (this.state.vcm.length === 3) {
+    
+    
     const three1 = value31(this.state.vcm);
     const three2 = value32(this.state.vcm);
     const three3 = value33(this.state.vcm);
@@ -180,12 +188,19 @@ class Analytics extends Component {
       sdH: [threeMin[0], threeMax[1]],
       sdHtest: [three1,three2,three3]
     });
-    
+    }
+  
   };
+  
+  showResultL = () => {
+    const test4 = value41(this.state.vcm);
+    console.log(test4);
+  };
+  
   
   render() {
     // console.log(this.props);
-    // console.log(this.state);
+    console.log(this.state);
     return (
       <div className={classes.Analytics}>
         {/*<div>*/}
@@ -211,7 +226,7 @@ class Analytics extends Component {
           <div>Buy {this.props.name[3]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[3] : this.state.sdM} </div>
         </div>
         <hr/>
-        Hard is testing! work only with 3 stock! Time wait - 2min!
+        Hard is testing! work only with 3 stock! Time wait - 13sec!
         <hr/>
         <div>
           <div className="analytic" onClick={this.showResultH}>Analytics Hard! (click me)
@@ -223,7 +238,8 @@ class Analytics extends Component {
           <div>Buy {this.props.name[2]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[2] : this.state.sdH} </div>
           <div>Buy {this.props.name[3]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[3] : this.state.sdH} </div>
         </div>
-      
+        <hr/>
+      <div onClick={this.showResultL}>Test 4! Console!</div>
       </div>
     );
   }

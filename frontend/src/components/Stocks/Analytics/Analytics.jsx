@@ -5,14 +5,14 @@ import {
   standardDeviation,
   dispersion,
   covariance,
-  mmult,
-  value1,
   value2,
-  value3,
   value31,
   value32,
   value33,
   value41,
+  value42,
+  value43,
+  value44,
 } from './fromuls.jsx';
 
 class Analytics extends Component {
@@ -23,7 +23,10 @@ class Analytics extends Component {
       sdE: 0,
       sdM: 0,
       sdH: 0,
-      sdHtest:[],
+      sdHtest: [],
+      sdL: 0,
+      sdLtest: [],
+      sd: 0
     };
   }
   
@@ -55,18 +58,16 @@ class Analytics extends Component {
     const stdev = [];
     const disper = [];
     const vcm = [];
-    // const mm = [];
-    // const sd = [];
     
-    source.map(elem => {
-      avg.push(mean(elem));
-    });
-    source.map(elem => {
-      stdev.push(standardDeviation(elem));
-    });
-    source.map(elem => {
-      disper.push(dispersion(elem));
-    });
+    source.map(elem =>
+      avg.push(mean(elem))
+    );
+    source.map(elem =>
+      stdev.push(standardDeviation(elem))
+    );
+    source.map(elem =>
+      disper.push(dispersion(elem))
+    );
     
     if (source.length > 1) {
       for (let i = 0; i < source.length; i++) {
@@ -82,12 +83,12 @@ class Analytics extends Component {
       }
     }
     
-    const variant2 = [
-      [0.005615179, -0.004727057, 0.001078098, 0.0008552],
-      [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
-      [0.001078098, 0.000753167, 0.001031119, 0.001278456],
+    // const variant2 = [
+    //   [0.005615179, -0.004727057, 0.001078098, 0.0008552],
+    //   [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
+    //   [0.001078098, 0.000753167, 0.001031119, 0.001278456],
       // [0.0008552, 0.003287635, 0.001278456, 0.006159359],
-    ];
+    // ];
     
     // if (vcm.length > 1) {
     //   const task1 = (mmult(variant1, variant2));
@@ -108,31 +109,24 @@ class Analytics extends Component {
         stdev,
         disper,
         vcm,
-        // mm,
-        // sd,
-        variant2,
       },
     };
   }
+
+  showRes = () => {
   
-  showResultE = () => {
-    //шаг 1
     
-    const tempArr = [1, 0, 0, 0];
-    
-    if (tempArr.length < this.state.vcm.length) {
-      for (let i = tempArr.length; i <
-      this.state.vcm.length; i = tempArr.length) {
-        tempArr.push(0);
-      }
-    } else if (tempArr.length > this.state.vcm.length) {
-      tempArr.splice(this.state.vcm.length, tempArr.length);
+    if (this.state.vcm.length === 2) {
+    this.showResultM()
+    }
+  
+    if (this.state.vcm.length === 3) {
+      this.showResultH()
     }
     
-    const one = value1(tempArr, this.state.vcm);
-    this.setState({
-      sdE: one,
-    });
+    if (this.state.vcm.length === 4) {
+    this.showResultL()
+    }
     
   };
   
@@ -149,97 +143,169 @@ class Analytics extends Component {
     }
     const two = value2(tempArr, this.state.vcm);
     this.setState({
-      sdM: two,
+      sd: two,
     });
     
-    
-
   };
   
   showResultH = () => {
     
     if (this.state.vcm.length === 3) {
-    
-    
-    const three1 = value31(this.state.vcm);
-    const three2 = value32(this.state.vcm);
-    const three3 = value33(this.state.vcm);
-    
-    function min(arr1, arr2, arr3) {
-      const all = [arr1, arr2, arr3];
-      const allMinSd = [arr1[0].sd, arr2[0].sd, arr3[0].sd];
-      const iMin = allMinSd.indexOf(
-        Math.min(arr1[0].sd, arr2[0].sd, arr3[0].sd));
-      return all[iMin];
+      
+      const three1 = value31(this.state.vcm);
+      const three2 = value32(this.state.vcm);
+      const three3 = value33(this.state.vcm);
+      
+      function min(arr1, arr2, arr3) {
+        const all = [arr1, arr2, arr3];
+        const allMinSd = [arr1[0].sd, arr2[0].sd, arr3[0].sd];
+        const iMin = allMinSd.indexOf(
+          Math.min(arr1[0].sd, arr2[0].sd, arr3[0].sd));
+        return all[iMin];
+      }
+      
+      function max(arr1, arr2, arr3) {
+        const all = [arr1, arr2, arr3];
+        const allMaxSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd];
+        const iMax = allMaxSd.indexOf(
+          Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd));
+        return all[iMax];
+      }
+      
+      const threeMin = min(three1, three2, three3);
+      const threeMax = max(three1, three2, three3);
+      
+      this.setState({
+        sd: [threeMin[0], threeMax[1]],
+        sdHtest: [three1, three2, three3],
+      });
     }
     
-    function max(arr1, arr2, arr3) {
-      const all = [arr1, arr2, arr3];
-      const allMinSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd];
-      const iMax = allMinSd.indexOf(
-        Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd));
-      return all[iMax];
-    }
-    
-    const threeMin = min(three1, three2, three3);
-    const threeMax = max(three1, three2, three3);
-    
-    this.setState({
-      sdH: [threeMin[0], threeMax[1]],
-      sdHtest: [three1,three2,three3]
-    });
-    }
-  
   };
   
   showResultL = () => {
-    const test4 = value41(this.state.vcm);
-    console.log(test4);
+  
+    if (this.state.vcm.length === 4) {
+  
+      const four1 = value41(this.state.vcm);
+      const four2 = value42(this.state.vcm);
+      const four3 = value43(this.state.vcm);
+      const four4 = value44(this.state.vcm);
+  
+      function min(arr1, arr2, arr3, arr4) {
+        const all = [arr1, arr2, arr3, arr4];
+        const allMinSd = [arr1[0].sd, arr2[0].sd, arr3[0].sd, arr4[0].sd];
+        const iMin = allMinSd.indexOf(
+          Math.min(arr1[0].sd, arr2[0].sd, arr3[0].sd, arr4[0].sd));
+        return all[iMin];
+      }
+  
+      function max(arr1, arr2, arr3, arr4) {
+        const all = [arr1, arr2, arr3, arr4];
+        const allMaxSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd];
+        const iMax = allMaxSd.indexOf(
+          Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd));
+        return all[iMax];
+      }
+  
+      const fourMin = min(four1, four2, four3, four4);
+      const fourMax = max(four1, four2, four3, four4);
+  
+      this.setState({
+        sd: [fourMin[0], fourMax[1]],
+        sdLtest: [four1, four2, four3, four4],
+      });
+    }
+    // console.log(test4);
   };
   
+  clearState = () => {
+    this.setState({
+      sdE: 0,
+      sdM: 0,
+      sdH: 0,
+      sdHtest: [],
+      sdL: 0,
+      sdLtest: [],
+    })
+  };
   
   render() {
-    // console.log(this.props);
-    console.log(this.state);
+    // console.log(1);
+    // console.log(this.state);
     return (
       <div className={classes.Analytics}>
+        <hr/>
         {/*<div>*/}
-        {/*  <div className="analytic" onClick={this.showResultE}>Analytics Easy!*/}
+        {/*  <div className="analytic" onClick={this.showRes}>Analytics*/}
+        {/*    Medium! (click me)*/}
         {/*  </div>*/}
-        {/*  <div>Min: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].sd}</p> : this.state.sdE}</div>*/}
-        {/*  <div>Max: {this.state.sdE !== 0 ? <p>{this.state.sdE[1].sd}</p> : this.state.sdE}</div>*/}
-        {/*  <div>Buy {this.props.name[0]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[0]}</p> : this.state.sdE} </div>*/}
-        {/*  <div>Buy {this.props.name[1]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[1]}</p> : this.state.sdE} </div>*/}
-        {/*  <div>Buy {this.props.name[2]}: {this.state.sdE !== 0 ? <p>{this.state.sdE[0].prtf[2]}</p> : this.state.sdE} </div>*/}
+        {/*  <div>Min: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].sd*/}
+        {/*    : this.state.sd}</div>*/}
+        {/*  <div>Max: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[1].sd*/}
+        {/*    : this.state.sd}</div>*/}
+        {/*  <div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[0]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[1]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[2]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[3]*/}
+        {/*    : this.state.sd} </div>*/}
         {/*</div>*/}
-        <hr/>
-  
-        <div>
-          <div className="analytic" onClick={this.showResultM}>Analytics
-            Medium! (click me)
-          </div>
-          <div>Min: {this.state.sdM !== 0 ? this.state.sdM[0].sd : this.state.sdM}</div>
-          <div>Max: {this.state.sdM !== 0 ? this.state.sdM[1].sd : this.state.sdM}</div>
-          <div>Buy {this.props.name[0]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[0] : this.state.sdM} </div>
-          <div>Buy {this.props.name[1]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[1] : this.state.sdM} </div>
-          <div>Buy {this.props.name[2]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[2] : this.state.sdM} </div>
-          <div>Buy {this.props.name[3]}: {this.state.sdM !== 0 ? this.state.sdM[0].prtf[3] : this.state.sdM} </div>
-        </div>
-        <hr/>
-        Hard is testing! work only with 3 stock! Time wait - 13sec!
+        Analytics! Time wait ~ 13sec!
         <hr/>
         <div>
-          <div className="analytic" onClick={this.showResultH}>Analytics Hard! (click me)
+          <div className="analytic" onClick={this.showRes}>
+            Analytics! (click me)
           </div>
-          <div>Min: {this.state.sdH !== 0 ? this.state.sdH[0].sd : this.state.sdH}</div>
-          <div>Max: {this.state.sdH !== 0 ? this.state.sdH[1].sd : this.state.sdH}</div>
-          <div>Buy {this.props.name[0]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[0] : this.state.sdH} </div>
-          <div>Buy {this.props.name[1]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[1] : this.state.sdH} </div>
-          <div>Buy {this.props.name[2]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[2] : this.state.sdH} </div>
-          <div>Buy {this.props.name[3]}: {this.state.sdH !== 0 ? this.state.sdH[0].prtf[3] : this.state.sdH} </div>
+          <div>Min: {this.state.sd !== 0
+            ? this.state.sd[0].sd
+            : this.state.sd}</div>
+          <div>Max: {this.state.sd !== 0
+            ? this.state.sd[1].sd
+            : this.state.sd}</div>
+          <div>Buy {this.props.name[0]}: {this.state.sd !== 0
+            ? this.state.sd[0].prtf[0]
+            : this.state.sd} </div>
+          <div>Buy {this.props.name[1]}: {this.state.sd !== 0
+            ? this.state.sd[0].prtf[1]
+            : this.state.sd} </div>
+          <div>Buy {this.props.name[2]}: {this.state.sd !== 0
+            ? this.state.sd[0].prtf[2]
+            : this.state.sd} </div>
+          <div>Buy {this.props.name[3]}: {this.state.sd !== 0
+            ? this.state.sd[0].prtf[3]
+            : this.state.sd} </div>
         </div>
         <hr/>
-      <div onClick={this.showResultL}>Test 4! Console!</div>
+        {/*<div>*/}
+        {/*  <div onClick={this.showRes}>Test 4! (click me)</div>*/}
+        {/*  <div>Min: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].sd*/}
+        {/*    : this.state.sd}</div>*/}
+        {/*  <div>Max: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[1].sd*/}
+        {/*    : this.state.sd}</div>*/}
+        {/*  <div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[0]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[1]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[2]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*  <div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
+        {/*    ? this.state.sd[0].prtf[3]*/}
+        {/*    : this.state.sd} </div>*/}
+        {/*</div>*/}
       </div>
     );
   }

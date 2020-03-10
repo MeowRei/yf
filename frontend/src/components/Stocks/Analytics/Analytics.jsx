@@ -283,6 +283,70 @@ class Analytics extends Component {
             : null}
         </div>
         <hr/>
+        <div className={classes.Analytics}>
+          {this.state.sd !== 0 ?
+            <table>
+              <thead>
+              <tr>
+                <th></th>
+                <th>{this.props.name[0]}</th>
+                <th>{this.props.name[1]}</th>
+                <th>{this.props.name[2]}</th>
+                <th>{this.props.name[3]}</th>
+                <th>-</th>
+                <th>Er</th>
+                <th>Variance</th>
+                <th>Sd</th>
+                <th>Sr</th>
+              </tr>
+              </thead>
+              <tbody>
+        
+              <tr>
+                <td>MVP</td>
+                <td>{this.state.sd[0].prtf[0] ? this.state.sd[0].prtf[0] : null}</td>
+                <td>{this.state.sd[0].prtf[1] ? this.state.sd[0].prtf[1] : null}</td>
+                <td>{this.state.sd[0].prtf[2] ? this.state.sd[0].prtf[2] : null}</td>
+                <td>{this.state.sd[0].length >=4 ? this.state.sd[0].prtf[3] : null}</td>
+                <td>-</td>
+                <td>er</td>
+                <td>{this.state.sd[0].variance ? this.state.sd[0].variance : null}</td>
+                <td>{this.state.sd[0].sd ? this.state.sd[0].sd : null}</td>
+                <td>sr</td>
+
+
+              </tr>
+              <tr>
+                <td>MVE</td>
+                <td>{this.state.sd[1].prtf[0] ? this.state.sd[1].prtf[0] : null}</td>
+                <td>{this.state.sd[1].prtf[1] ? this.state.sd[1].prtf[1] : null}</td>
+                <td>{this.state.sd[1].prtf[2] ? this.state.sd[1].prtf[2] : null}</td>
+                <td>{this.state.sd[1].length >=4 ? this.state.sd[1].prtf[3] : null}</td>
+                <td>-</td>
+                <td>er</td>
+                <td>{this.state.sd[1].variance ? this.state.sd[1].variance : null}</td>
+                <td>{this.state.sd[1].sd ? this.state.sd[1].sd : null}</td>
+                <td>sr</td>
+              </tr>
+              {/*<tr>*/}
+              {/*  <td>{this.props.name[2]}</td>*/}
+              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][0] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][1] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][2] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[2][3] : null}</td>*/}
+              {/*</tr>*/}
+              {/*<tr>*/}
+              {/*  <td>{this.props.name[3]}</td>*/}
+              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][0] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][1] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][2] : null}</td>*/}
+              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][3] : null}</td>*/}
+              {/*</tr>*/}
+              </tbody>
+            </table>
+            : null}
+        </div>
+  <hr/>
         <div>
           <div className="analytic" onClick={this.showRes}>
             Analytics! (click me)

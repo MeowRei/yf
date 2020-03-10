@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import classes from './Analytics.css';
 import {
+  mmult,
   mean,
   standardDeviation,
   dispersion,
@@ -20,11 +21,8 @@ class Analytics extends Component {
     super(props);
     
     this.state = {
-      sdE: 0,
-      sdM: 0,
-      sdH: 0,
+      er: [],
       sdHtest: [],
-      sdL: 0,
       sdLtest: [],
       sd: 0,
     };
@@ -126,7 +124,7 @@ class Analytics extends Component {
     if (this.state.vcm.length === 4) {
       this.showResultL();
     }
-    
+
   };
   
   showResultM = () => {
@@ -230,10 +228,10 @@ class Analytics extends Component {
   };
   
   render() {
-    // console.log(1);
+    // console.log(this.props);
     // console.log(this.state);
     return (
-      <div >
+      <div>
         <hr/>
         Matrix
         <div className={classes.Analytics}>
@@ -254,29 +252,53 @@ class Analytics extends Component {
                 <td>{this.props.name[0]}</td>
                 <td>{this.state.vcm[0][0] ? this.state.vcm[0][0] : null}</td>
                 <td>{this.state.vcm[0][1] ? this.state.vcm[0][1] : null}</td>
-                <td>{this.state.vcm.length >=3 ? this.state.vcm[0][2] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[0][3] : null}</td>
+                <td>{this.state.vcm.length >= 3
+                  ? this.state.vcm[0][2]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[0][3]
+                  : null}</td>
               </tr>
               <tr>
                 <td>{this.props.name[1]}</td>
                 <td>{this.state.vcm[1][0] ? this.state.vcm[1][0] : null}</td>
                 <td>{this.state.vcm[1][1] ? this.state.vcm[1][1] : null}</td>
-                <td>{this.state.vcm.length >=3 ? this.state.vcm[1][2] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[1][3] : null}</td>
+                <td>{this.state.vcm.length >= 3
+                  ? this.state.vcm[1][2]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[1][3]
+                  : null}</td>
               </tr>
               <tr>
                 <td>{this.props.name[2]}</td>
-                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][0] : null}</td>
-                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][1] : null}</td>
-                <td>{this.state.vcm.length >=3 ? this.state.vcm[2][2] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[2][3] : null}</td>
+                <td>{this.state.vcm.length >= 3
+                  ? this.state.vcm[2][0]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 3
+                  ? this.state.vcm[2][1]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 3
+                  ? this.state.vcm[2][2]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[2][3]
+                  : null}</td>
               </tr>
               <tr>
                 <td>{this.props.name[3]}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][0] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][1] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][2] : null}</td>
-                <td>{this.state.vcm.length >=4 ? this.state.vcm[3][3] : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[3][0]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[3][1]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[3][2]
+                  : null}</td>
+                <td>{this.state.vcm.length >= 4
+                  ? this.state.vcm[3][3]
+                  : null}</td>
               </tr>
               </tbody>
             </table>
@@ -293,7 +315,6 @@ class Analytics extends Component {
                 <th>{this.props.name[1]}</th>
                 <th>{this.props.name[2]}</th>
                 <th>{this.props.name[3]}</th>
-                <th>-</th>
                 <th>Er</th>
                 <th>Variance</th>
                 <th>Sd</th>
@@ -301,30 +322,48 @@ class Analytics extends Component {
               </tr>
               </thead>
               <tbody>
-        
+              
               <tr>
                 <td>MVP</td>
-                <td>{this.state.sd[0].prtf[0] ? this.state.sd[0].prtf[0] : null}</td>
-                <td>{this.state.sd[0].prtf[1] ? this.state.sd[0].prtf[1] : null}</td>
-                <td>{this.state.sd[0].prtf[2] ? this.state.sd[0].prtf[2] : null}</td>
-                <td>{this.state.sd[0].length >=4 ? this.state.sd[0].prtf[3] : null}</td>
-                <td>-</td>
-                <td>er</td>
-                <td>{this.state.sd[0].variance ? this.state.sd[0].variance : null}</td>
+                <td>{this.state.sd[0].prtf[0]
+                  ? this.state.sd[0].prtf[0]
+                  : null}</td>
+                <td>{this.state.sd[0].prtf[1]
+                  ? this.state.sd[0].prtf[1]
+                  : null}</td>
+                <td>{this.state.sd[0].prtf[2]
+                  ? this.state.sd[0].prtf[2]
+                  : null}</td>
+                <td>{this.state.sd[0].length >= 4
+                  ? this.state.sd[0].prtf[3]
+                  : null}</td>
+                <td>{mmult(this.state.avg, this.state.sd[0].prtf)}</td>
+                <td>{this.state.sd[0].variance
+                  ? this.state.sd[0].variance
+                  : null}</td>
                 <td>{this.state.sd[0].sd ? this.state.sd[0].sd : null}</td>
                 <td>sr</td>
-
-
+              
+              
               </tr>
               <tr>
                 <td>MVE</td>
-                <td>{this.state.sd[1].prtf[0] ? this.state.sd[1].prtf[0] : null}</td>
-                <td>{this.state.sd[1].prtf[1] ? this.state.sd[1].prtf[1] : null}</td>
-                <td>{this.state.sd[1].prtf[2] ? this.state.sd[1].prtf[2] : null}</td>
-                <td>{this.state.sd[1].length >=4 ? this.state.sd[1].prtf[3] : null}</td>
-                <td>-</td>
-                <td>er</td>
-                <td>{this.state.sd[1].variance ? this.state.sd[1].variance : null}</td>
+                <td>{this.state.sd[1].prtf[0]
+                  ? this.state.sd[1].prtf[0]
+                  : null}</td>
+                <td>{this.state.sd[1].prtf[1]
+                  ? this.state.sd[1].prtf[1]
+                  : null}</td>
+                <td>{this.state.sd[1].prtf[2]
+                  ? this.state.sd[1].prtf[2]
+                  : null}</td>
+                <td>{this.state.sd[1].length >= 4
+                  ? this.state.sd[1].prtf[3]
+                  : null}</td>
+                <td>{mmult(this.state.avg, this.state.sd[1].prtf)}</td>
+                <td>{this.state.sd[1].variance
+                  ? this.state.sd[1].variance
+                  : null}</td>
                 <td>{this.state.sd[1].sd ? this.state.sd[1].sd : null}</td>
                 <td>sr</td>
               </tr>
@@ -346,7 +385,7 @@ class Analytics extends Component {
             </table>
             : null}
         </div>
-  <hr/>
+        <hr/>
         <div>
           <div className="analytic" onClick={this.showRes}>
             Analytics! (click me)

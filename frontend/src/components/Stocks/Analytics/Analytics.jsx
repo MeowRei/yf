@@ -228,9 +228,10 @@ class Analytics extends Component {
   };
   
   render() {
-    
-    const buyElem = [];
+    console.log(this.props.name)
   
+    //----------buy-----------
+    const buyElem = [];
     for (let i = 0; i < this.props.name.length; i++) {
       buyElem.push(
         <div
@@ -239,7 +240,58 @@ class Analytics extends Component {
         ? this.state.sd[0].prtf[i]
         : this.state.sd} </div>)
     }
+    //----------buy-----------
+  
+    //----------Matrix-----------
+    //head
+    const theadMatrix = [];
+  
+    for (let i = 0; i < this.props.name.length; i++) {
+      theadMatrix.push(
+        <th
+          key={i+10}
+        >{this.props.name[i]}</th>)
+    }
+    //body
+    const tbodyData = [];
+  
+    if (this.props.name.length > 1) {
+  
+      for (let i = 0; i < this.props.name.length; i++) {
+        let tempData = [];
+        for (let j = 0; j < this.props.name.length; j++) {
+          tempData.push
+          (<td
+            key={i+j+1000}
+          >{this.state.vcm[i][j] ? this.state.vcm[i][j] : null}</td>)
+        }
+        tbodyData.push(tempData)
+      }
+    }
+
     
+    const tbodyMatrix = [];
+  
+    for (let i = 0; i < this.props.name.length; i++) {
+      tbodyMatrix.push(
+        <tr
+        key={i}
+        >
+          <td>{this.props.name[i]}</td>
+          {this.props.name.length > 1 ? tbodyData[i] : "null"}
+          {/*<td>{this.state.vcm[i][0] ? this.state.vcm[i][0] : null}</td>*/}
+          {/*<td>{this.state.vcm[i][1] ? this.state.vcm[i][1] : null}</td>*/}
+          {/*<td>{this.state.vcm.length >= 3*/}
+          {/*  ? this.state.vcm[i][2]*/}
+          {/*  : null}</td>*/}
+          {/*<td>{this.state.vcm.length >= 4*/}
+          {/*  ? this.state.vcm[i][3]*/}
+          {/*  : null}</td>*/}
+        </tr>)
+    }
+    
+    //----------Matrix-----------
+  
     return (
       <div>
         <hr/>
@@ -250,66 +302,11 @@ class Analytics extends Component {
               <thead>
               <tr>
                 <th></th>
-                <th>{this.props.name[0]}</th>
-                <th>{this.props.name[1]}</th>
-                <th>{this.props.name[2]}</th>
-                <th>{this.props.name[3]}</th>
+                {theadMatrix}
               </tr>
               </thead>
               <tbody>
-              
-              <tr>
-                <td>{this.props.name[0]}</td>
-                <td>{this.state.vcm[0][0] ? this.state.vcm[0][0] : null}</td>
-                <td>{this.state.vcm[0][1] ? this.state.vcm[0][1] : null}</td>
-                <td>{this.state.vcm.length >= 3
-                  ? this.state.vcm[0][2]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[0][3]
-                  : null}</td>
-              </tr>
-              <tr>
-                <td>{this.props.name[1]}</td>
-                <td>{this.state.vcm[1][0] ? this.state.vcm[1][0] : null}</td>
-                <td>{this.state.vcm[1][1] ? this.state.vcm[1][1] : null}</td>
-                <td>{this.state.vcm.length >= 3
-                  ? this.state.vcm[1][2]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[1][3]
-                  : null}</td>
-              </tr>
-              <tr>
-                <td>{this.props.name[2]}</td>
-                <td>{this.state.vcm.length >= 3
-                  ? this.state.vcm[2][0]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 3
-                  ? this.state.vcm[2][1]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 3
-                  ? this.state.vcm[2][2]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[2][3]
-                  : null}</td>
-              </tr>
-              <tr>
-                <td>{this.props.name[3]}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[3][0]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[3][1]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[3][2]
-                  : null}</td>
-                <td>{this.state.vcm.length >= 4
-                  ? this.state.vcm[3][3]
-                  : null}</td>
-              </tr>
+              {tbodyMatrix}
               </tbody>
             </table>
             : null}
@@ -380,9 +377,10 @@ class Analytics extends Component {
         </div>
         <hr/>
         <div>
-          <div className="analytic" onClick={this.showRes}>
-            Analytics! (click me)
-          </div>
+          <div>Analytics!</div>
+          <button className="analytic" onClick={this.showRes}>
+             (click me)
+          </button>
           {/*<div>Min: {this.state.sd !== 0*/}
           {/*  ? this.state.sd[0].sd*/}
           {/*  : this.state.sd}</div>*/}
@@ -390,18 +388,6 @@ class Analytics extends Component {
           {/*  ? this.state.sd[1].sd*/}
           {/*  : this.state.sd}</div>*/}
           {buyElem}
-          {/*<div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[0].prtf[0]*/}
-          {/*  : this.state.sd} </div>*/}
-          {/*<div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[0].prtf[1]*/}
-          {/*  : this.state.sd} </div>*/}
-          {/*<div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[0].prtf[2]*/}
-          {/*  : this.state.sd} </div>*/}
-          {/*<div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[0].prtf[3]*/}
-          {/*  : this.state.sd} </div>*/}
         </div>
         <hr/>
       </div>

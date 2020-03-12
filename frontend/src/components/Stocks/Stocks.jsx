@@ -152,37 +152,6 @@ class Stocks extends Component {
             <div>
               {fields}
             </div>
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  name={'symbol1'}*/}
-            {/*  value={this.state.symbol.symbol1}*/}
-            {/*  placeholder="Enter stocks name 1"*/}
-            {/*  onChange={this.getSymbol}*/}
-            {/*/>*/}
-            {/**/}
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  name={'symbol2'}*/}
-            {/*  value={this.state.symbol.symbol2}*/}
-            {/*  placeholder="Enter stocks name 2"*/}
-            {/*  onChange={this.getSymbol}*/}
-            {/*/>*/}
-            {/**/}
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  name={'symbol3'}*/}
-            {/*  value={this.state.symbol.symbol3}*/}
-            {/*  placeholder="Enter stocks name 3"*/}
-            {/*  onChange={this.getSymbol}*/}
-            {/*/>*/}
-            
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  name={'symbol4'}*/}
-            {/*  value={this.state.symbol.symbol4}*/}
-            {/*  placeholder="Enter stocks name 4"*/}
-            {/*  onChange={this.getSymbol}*/}
-            {/*/>*/}
             <div>
             <button onClick={this.addInputStock}>+</button>
             <button onClick={this.delInputStock}>-</button>

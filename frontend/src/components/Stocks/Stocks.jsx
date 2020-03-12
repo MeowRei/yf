@@ -115,7 +115,7 @@ class Stocks extends Component {
   };
   
   addInputStock = () => {
-    if (this.state.fieldsCount < 9) {
+    if (this.state.fieldsCount < 8) {
     this.setState({
       fieldsCount: this.state.fieldsCount + 1,
     });
@@ -149,7 +149,9 @@ class Stocks extends Component {
       <div>
         <div>
           <div className={classes.Symbol}>
-            {fields}
+            <div>
+              {fields}
+            </div>
             {/*<input*/}
             {/*  type="text"*/}
             {/*  name={'symbol1'}*/}
@@ -181,10 +183,11 @@ class Stocks extends Component {
             {/*  placeholder="Enter stocks name 4"*/}
             {/*  onChange={this.getSymbol}*/}
             {/*/>*/}
+            <div>
             <button onClick={this.addInputStock}>+</button>
             <button onClick={this.delInputStock}>-</button>
             <button onClick={this.onClear}>Clear</button>
-          
+            </div>
           </div>
           <br/>
           <div className={classes.Params}>

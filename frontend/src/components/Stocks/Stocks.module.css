@@ -1,7 +1,6 @@
 .Symbol {
     margin-top: 40px;
-    display: flex;
-    justify-content: center;
+    text-align: center;
 }
 
 .Params {
@@ -20,4 +19,8 @@
     display: flex;
     justify-content: center;
     /*flex-direction: column;*/
+}
+
+.BlockInput {
+
 }

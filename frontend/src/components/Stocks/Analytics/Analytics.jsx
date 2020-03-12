@@ -228,8 +228,18 @@ class Analytics extends Component {
   };
   
   render() {
-    // console.log(this.props);
-    // console.log(this.state);
+    
+    const buyElem = [];
+  
+    for (let i = 0; i < this.props.name.length; i++) {
+      buyElem.push(
+        <div
+          key={i}
+        >Buy {this.props.name[i]}: {this.state.sd !== 0
+        ? this.state.sd[0].prtf[i]
+        : this.state.sd} </div>)
+    }
+    
     return (
       <div>
         <hr/>
@@ -322,7 +332,6 @@ class Analytics extends Component {
               </tr>
               </thead>
               <tbody>
-              
               <tr>
                 <td>MVP</td>
                 <td>{this.state.sd[0].prtf[0]
@@ -343,8 +352,6 @@ class Analytics extends Component {
                   : null}</td>
                 <td>{this.state.sd[0].sd ? this.state.sd[0].sd : null}</td>
                 <td>sr</td>
-              
-              
               </tr>
               <tr>
                 <td>MVE</td>
@@ -367,20 +374,6 @@ class Analytics extends Component {
                 <td>{this.state.sd[1].sd ? this.state.sd[1].sd : null}</td>
                 <td>sr</td>
               </tr>
-              {/*<tr>*/}
-              {/*  <td>{this.props.name[2]}</td>*/}
-              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][0] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][1] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=3 ? this.state.vcm[2][2] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[2][3] : null}</td>*/}
-              {/*</tr>*/}
-              {/*<tr>*/}
-              {/*  <td>{this.props.name[3]}</td>*/}
-              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][0] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][1] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][2] : null}</td>*/}
-              {/*  <td>{this.state.vcm.length >=4 ? this.state.vcm[3][3] : null}</td>*/}
-              {/*</tr>*/}
               </tbody>
             </table>
             : null}
@@ -390,47 +383,27 @@ class Analytics extends Component {
           <div className="analytic" onClick={this.showRes}>
             Analytics! (click me)
           </div>
-          <div>Min: {this.state.sd !== 0
-            ? this.state.sd[0].sd
-            : this.state.sd}</div>
-          <div>Max: {this.state.sd !== 0
-            ? this.state.sd[1].sd
-            : this.state.sd}</div>
-          <div>Buy {this.props.name[0]}: {this.state.sd !== 0
-            ? this.state.sd[0].prtf[0]
-            : this.state.sd} </div>
-          <div>Buy {this.props.name[1]}: {this.state.sd !== 0
-            ? this.state.sd[0].prtf[1]
-            : this.state.sd} </div>
-          <div>Buy {this.props.name[2]}: {this.state.sd !== 0
-            ? this.state.sd[0].prtf[2]
-            : this.state.sd} </div>
-          <div>Buy {this.props.name[3]}: {this.state.sd !== 0
-            ? this.state.sd[0].prtf[3]
-            : this.state.sd} </div>
+          {/*<div>Min: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[0].sd*/}
+          {/*  : this.state.sd}</div>*/}
+          {/*<div>Max: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[1].sd*/}
+          {/*  : this.state.sd}</div>*/}
+          {buyElem}
+          {/*<div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[0].prtf[0]*/}
+          {/*  : this.state.sd} </div>*/}
+          {/*<div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[0].prtf[1]*/}
+          {/*  : this.state.sd} </div>*/}
+          {/*<div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[0].prtf[2]*/}
+          {/*  : this.state.sd} </div>*/}
+          {/*<div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
+          {/*  ? this.state.sd[0].prtf[3]*/}
+          {/*  : this.state.sd} </div>*/}
         </div>
         <hr/>
-        {/*<div>*/}
-        {/*  <div onClick={this.showRes}>Test 4! (click me)</div>*/}
-        {/*  <div>Min: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].sd*/}
-        {/*    : this.state.sd}</div>*/}
-        {/*  <div>Max: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[1].sd*/}
-        {/*    : this.state.sd}</div>*/}
-        {/*  <div>Buy {this.props.name[0]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[0]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[1]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[1]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[2]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[2]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*  <div>Buy {this.props.name[3]}: {this.state.sd !== 0*/}
-        {/*    ? this.state.sd[0].prtf[3]*/}
-        {/*    : this.state.sd} </div>*/}
-        {/*</div>*/}
       </div>
     );
   }

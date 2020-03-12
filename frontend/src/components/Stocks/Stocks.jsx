@@ -12,11 +12,17 @@ class Stocks extends Component {
     this.state = {
       data: '',
       value: '',
+      fieldsCount: 4,
       symbol: {
         symbol1: '',
         symbol2: '',
         symbol3: '',
         symbol4: '',
+        symbol5: '',
+        symbol6: '',
+        symbol7: '',
+        symbol8: '',
+        symbol9: '',
       },
       from: '',
       to: '',
@@ -89,14 +95,17 @@ class Stocks extends Component {
         symbol2: '',
         symbol3: '',
         symbol4: '',
+        symbol5: '',
+        symbol6: '',
+        symbol7: '',
+        symbol8: '',
+        symbol9: '',
       },
     });
   };
   
   delDate = (dateId) => {
     const data = this.state.data;
-    // console.log(data);
-    // console.log(dateId);
     Object.values(data).map(elem =>
       elem.splice(dateId, 1),
     );
@@ -105,43 +114,75 @@ class Stocks extends Component {
     });
   };
   
+  addInputStock = () => {
+    if (this.state.fieldsCount < 9) {
+    this.setState({
+      fieldsCount: this.state.fieldsCount + 1,
+    });
+    }
+  };
+  
+  delInputStock = () => {
+    if (this.state.fieldsCount > 1) {
+      this.setState({
+        fieldsCount: this.state.fieldsCount - 1,
+      });
+    }
+  };
+  
   render() {
     
+    const fields = [];
+    
+    for (let i = 0; i < this.state.fieldsCount; i++) {
+      fields.push(<input
+        key={i}
+        type="text"
+        name={`symbol${i + 1}`}
+        value={Object.values(this.state.symbol)[i]}
+        placeholder="Enter stocks name"
+        onChange={this.getSymbol}
+      />);
+    }
+    // console.log(this.state);
     return (
       <div>
         <div>
           <div className={classes.Symbol}>
-            <input
-              type="text"
-              name={'symbol1'}
-              value={this.state.symbol.symbol1}
-              placeholder="Enter stocks name 1"
-              onChange={this.getSymbol}
-            />
+            {fields}
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  name={'symbol1'}*/}
+            {/*  value={this.state.symbol.symbol1}*/}
+            {/*  placeholder="Enter stocks name 1"*/}
+            {/*  onChange={this.getSymbol}*/}
+            {/*/>*/}
+            {/**/}
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  name={'symbol2'}*/}
+            {/*  value={this.state.symbol.symbol2}*/}
+            {/*  placeholder="Enter stocks name 2"*/}
+            {/*  onChange={this.getSymbol}*/}
+            {/*/>*/}
+            {/**/}
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  name={'symbol3'}*/}
+            {/*  value={this.state.symbol.symbol3}*/}
+            {/*  placeholder="Enter stocks name 3"*/}
+            {/*  onChange={this.getSymbol}*/}
+            {/*/>*/}
             
-            <input
-              type="text"
-              name={'symbol2'}
-              value={this.state.symbol.symbol2}
-              placeholder="Enter stocks name 2"
-              onChange={this.getSymbol}
-            />
-            
-            <input
-              type="text"
-              name={'symbol3'}
-              value={this.state.symbol.symbol3}
-              placeholder="Enter stocks name 3"
-              onChange={this.getSymbol}
-            />
-            
-            <input
-              type="text"
-              name={'symbol4'}
-              value={this.state.symbol.symbol4}
-              placeholder="Enter stocks name 4"
-              onChange={this.getSymbol}
-            />
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  name={'symbol4'}*/}
+            {/*  value={this.state.symbol.symbol4}*/}
+            {/*  placeholder="Enter stocks name 4"*/}
+            {/*  onChange={this.getSymbol}*/}
+            {/*/>*/}
+            <button onClick={this.addInputStock}>+</button>
+            <button onClick={this.delInputStock}>-</button>
             <button onClick={this.onClear}>Clear</button>
           
           </div>

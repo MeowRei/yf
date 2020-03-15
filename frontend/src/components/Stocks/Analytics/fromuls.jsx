@@ -136,9 +136,9 @@ function value2(arr1, arr2) {
         }
         
         tempArr[z] = Number(
-          Number.parseFloat(tempArr[z] - 0.001).toFixed(4));
+          Number.parseFloat(tempArr[z] - 0.001).toFixed(3));
         tempArr[j] = Number(
-          Number.parseFloat(tempArr[j] + 0.001).toFixed(4));
+          Number.parseFloat(tempArr[j] + 0.001).toFixed(3));
       }
       //---------------------------
       
@@ -414,16 +414,22 @@ function value41(arr) {
           max.sd = task3;
           max.prtf = [...simpleArr];
         }
-        simpleArr[3] = simpleArr[3] + 0.001;
-        simpleArr[0] = simpleArr[0] - 0.001;
+        simpleArr[3] = Number(
+          Number.parseFloat(simpleArr[3] + 0.001).toFixed(3));
+        simpleArr[0] = Number(
+          Number.parseFloat(simpleArr[0] - 0.001).toFixed(3));
       }
       
-      workArr[2] = workArr[2] + 0.001;
-      workArr[0] = workArr[0] - 0.001;
+      workArr[2] = Number(
+        Number.parseFloat(workArr[2] + 0.001).toFixed(3));
+      workArr[0] = Number(
+        Number.parseFloat(workArr[0] - 0.001).toFixed(3));
   
     }
-    tempArr[1] = tempArr[1] + 0.001;
-    tempArr[0] = tempArr[0] - 0.001;
+    tempArr[1] = Number(
+      Number.parseFloat(tempArr[1] + 0.001).toFixed(3));
+    tempArr[0] = Number(
+      Number.parseFloat(tempArr[0] - 0.001).toFixed(3));
   
   
   }
@@ -469,16 +475,22 @@ function value42(arr) {
           max.sd = task3;
           max.prtf = [...simpleArr];
         }
-        simpleArr[0] = simpleArr[0] + 0.001;
-        simpleArr[1] = simpleArr[1] - 0.001;
+        simpleArr[0] = Number(
+          Number.parseFloat(simpleArr[0] + 0.001).toFixed(3));
+        simpleArr[1] = Number(
+          Number.parseFloat(simpleArr[1] - 0.001).toFixed(3));
       }
       
-      workArr[3] = workArr[3] + 0.001;
-      workArr[1] = workArr[1] - 0.001;
+      workArr[3] = Number(
+        Number.parseFloat(workArr[3] + 0.001).toFixed(3));
+      workArr[1] = Number(
+        Number.parseFloat(workArr[1] - 0.001).toFixed(3));
       
     }
-    tempArr[2] = tempArr[2] + 0.001;
-    tempArr[1] = tempArr[1] - 0.001;
+    tempArr[2] = Number(
+      Number.parseFloat(tempArr[2] + 0.001).toFixed(3));
+    tempArr[1] = Number(
+      Number.parseFloat(tempArr[1] - 0.001).toFixed(3));
     
     
   }
@@ -524,16 +536,22 @@ function value43(arr) {
           max.sd = task3;
           max.prtf = [...simpleArr];
         }
-        simpleArr[1] = simpleArr[1] + 0.001;
-        simpleArr[2] = simpleArr[2] - 0.001;
+        simpleArr[1] = Number(
+          Number.parseFloat(simpleArr[1] + 0.001).toFixed(3));
+        simpleArr[2] = Number(
+          Number.parseFloat(simpleArr[2] - 0.001).toFixed(3));
       }
       
-      workArr[0] = workArr[0] + 0.001;
-      workArr[2] = workArr[2] - 0.001;
+      workArr[0] = Number(
+        Number.parseFloat(workArr[0] + 0.001).toFixed(3));
+      workArr[2] = Number(
+        Number.parseFloat(workArr[2] - 0.001).toFixed(3));
       
     }
-    tempArr[3] = tempArr[3] + 0.001;
-    tempArr[2] = tempArr[2] - 0.001;
+    tempArr[3] = Number(
+      Number.parseFloat(tempArr[3] + 0.001).toFixed(3));
+    tempArr[2] = Number(
+      Number.parseFloat(tempArr[2] - 0.001).toFixed(3));
     
     
   }
@@ -579,17 +597,22 @@ function value44(arr) {
           max.sd = task3;
           max.prtf = [...simpleArr];
         }
-        simpleArr[2] = simpleArr[2] + 0.001;
-        simpleArr[3] = simpleArr[3] - 0.001;
+        simpleArr[2] = Number(
+          Number.parseFloat(simpleArr[2] + 0.001).toFixed(3));
+        simpleArr[3] = Number(
+          Number.parseFloat(simpleArr[3] - 0.001).toFixed(3));
       }
       
-      workArr[1] = workArr[1] + 0.001;
-      workArr[3] = workArr[3] - 0.001;
+      workArr[1] = Number(
+        Number.parseFloat(workArr[1] + 0.001).toFixed(3));
+      workArr[3] = Number(
+        Number.parseFloat(workArr[3] - 0.001).toFixed(3));
       
     }
-    tempArr[0] = tempArr[0] + 0.001;
-    tempArr[3] = tempArr[3] - 0.001;
-    
+    tempArr[0] = Number(
+      Number.parseFloat(tempArr[0] + 0.001).toFixed(3));
+    tempArr[3] = Number(
+      Number.parseFloat(tempArr[3] - 0.001).toFixed(3));
     
   }
   return [min, max];

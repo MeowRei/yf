@@ -13,12 +13,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 const symbolRouter = require('./routes/symbol');
+const riskRouter = require('./routes/risk');
 
 
 
 app.use('/users', usersRouter);
 app.use('/index', indexRouter);
 app.use('/symbol', symbolRouter);
+app.use('/risk', riskRouter);
 
 
 useErrorHandlers(app);

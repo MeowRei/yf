@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import classes from './Analytics.css';
+import classes from './Analytics.module.css';
+
 import {
   mmult,
   mean,
@@ -25,6 +26,8 @@ class Analytics extends Component {
       sdHtest: [],
       sdLtest: [],
       sd: 0,
+      srMVP: 0,
+      srMVE:0,
     };
   }
   
@@ -34,7 +37,7 @@ class Analytics extends Component {
     const source = [];
     const temp = [];
     if (props.value.length > 1) {
-      props.value.map((elem, index) => {
+      props.value.forEach((elem, index) => {
         source.push(elem.map((content, index, array) => {
           if (array.length - 1 !== index) {
             return array[index].adjClose / array[index + 1].adjClose - 1;
@@ -43,7 +46,7 @@ class Analytics extends Component {
         source[index].pop();
       });
     } else {
-      props.value[0].map((elem, index, array) => {
+      props.value[0].forEach((elem, index, array) => {
         if (array.length - 1 !== index) {
           temp.push(array[index].adjClose / array[index + 1].adjClose - 1);
         }
@@ -80,6 +83,9 @@ class Analytics extends Component {
         vcm.push(task1);
       }
     }
+  
+    const risk = Math.pow((1 + (props.risk)),(1/12))-1;
+ 
     
     // const variant2 = [
     //   [0.005615179, -0.004727057, 0.001078098, 0.0008552],
@@ -107,12 +113,14 @@ class Analytics extends Component {
         stdev,
         disper,
         vcm,
+        risk,
       },
     };
   }
   
   showRes = () => {
-    
+  
+  
     if (this.state.vcm.length === 2) {
       this.showResultM();
     }
@@ -124,8 +132,18 @@ class Analytics extends Component {
     if (this.state.vcm.length === 4) {
       this.showResultL();
     }
-
+    
+    
+    
+    
   };
+  
+  // showRisk = () => {
+  //   const risk = Math.pow(1 + this.props.risk,((1/12)-1));
+  //   this.setState({
+  //     risk
+  //   })
+  // };
   
   showResultM = () => {
     const tempArr = [1, 0, 0, 0];
@@ -138,6 +156,8 @@ class Analytics extends Component {
     } else if (tempArr.length > this.state.vcm.length) {
       tempArr.splice(this.state.vcm.length, tempArr.length);
     }
+    
+    
     const two = value2(tempArr, this.state.vcm);
     this.setState({
       sd: two,
@@ -169,8 +189,11 @@ class Analytics extends Component {
         return all[iMax];
       }
       
+      
       const threeMin = min(three1, three2, three3);
       const threeMax = max(three1, three2, three3);
+  
+
       
       this.setState({
         sd: [threeMin[0], threeMax[1]],
@@ -207,6 +230,9 @@ class Analytics extends Component {
       
       const fourMin = min(four1, four2, four3, four4);
       const fourMax = max(four1, four2, four3, four4);
+  
+
+      
       
       this.setState({
         sd: [fourMin[0], fourMax[1]],
@@ -227,9 +253,13 @@ class Analytics extends Component {
     });
   };
   
-  render() {
-    console.log(this.props.name)
   
+  render() {
+    // console.log(this.state);
+    // const risk = Math.pow((1 + (0.0201)),(1/12))-1;
+    // console.log(risk);
+    // console.log(this.state.sd[0].prtf && 0);
+    // console.log(this.state.avg);
     //----------buy-----------
     const buyElem = [];
     for (let i = 0; i < this.props.name.length; i++) {
@@ -237,66 +267,65 @@ class Analytics extends Component {
         <div
           key={i}
         >Buy {this.props.name[i]}: {this.state.sd !== 0
-        ? this.state.sd[0].prtf[i]
-        : this.state.sd} </div>)
+          ? this.state.sd[0].prtf[i]
+          : this.state.sd} </div>);
     }
     //----------buy-----------
-  
+    
     //----------Matrix-----------
     //head
     const theadMatrix = [];
-  
+    
     for (let i = 0; i < this.props.name.length; i++) {
       theadMatrix.push(
         <th
-          key={i+10}
-        >{this.props.name[i]}</th>)
+          key={i + 10}
+        >{this.props.name[i]}</th>);
     }
     //body
     const tbodyData = [];
-  
+    
     if (this.props.name.length > 1) {
-  
+      
       for (let i = 0; i < this.props.name.length; i++) {
         let tempData = [];
         for (let j = 0; j < this.props.name.length; j++) {
           tempData.push
           (<td
-            key={i+j+1000}
-          >{this.state.vcm[i][j] ? this.state.vcm[i][j] : null}</td>)
+            key={i + j + 1000}
+          >{this.state.vcm[i][j] ? (this.state.vcm[i][j]).toFixed(3) : null}</td>);
         }
-        tbodyData.push(tempData)
+        tbodyData.push(tempData);
       }
     }
-
     
     const tbodyMatrix = [];
-  
+    
     for (let i = 0; i < this.props.name.length; i++) {
       tbodyMatrix.push(
         <tr
-        key={i}
+          key={i}
         >
           <td>{this.props.name[i]}</td>
-          {this.props.name.length > 1 ? tbodyData[i] : "null"}
-          {/*<td>{this.state.vcm[i][0] ? this.state.vcm[i][0] : null}</td>*/}
-          {/*<td>{this.state.vcm[i][1] ? this.state.vcm[i][1] : null}</td>*/}
-          {/*<td>{this.state.vcm.length >= 3*/}
-          {/*  ? this.state.vcm[i][2]*/}
-          {/*  : null}</td>*/}
-          {/*<td>{this.state.vcm.length >= 4*/}
-          {/*  ? this.state.vcm[i][3]*/}
-          {/*  : null}</td>*/}
-        </tr>)
+          {this.props.name.length > 1 ? tbodyData[i] : '0'}
+        </tr>);
     }
     
     //----------Matrix-----------
-  
+    
+    //----------Risk-----------
+    
+
+    
+    //----------Risk-----------
+    
     return (
       <div>
         <hr/>
         Matrix
-        <div className={classes.Analytics}>
+        <div
+          className={classes.Analytics}
+        >
           {this.state.vcm.length >= 2 ?
             <table>
               <thead>
@@ -312,7 +341,9 @@ class Analytics extends Component {
             : null}
         </div>
         <hr/>
-        <div className={classes.Analytics}>
+        <div
+          className={classes.Analytics}
+        >
           {this.state.sd !== 0 ?
             <table>
               <thead>
@@ -332,44 +363,48 @@ class Analytics extends Component {
               <tr>
                 <td>MVP</td>
                 <td>{this.state.sd[0].prtf[0]
-                  ? this.state.sd[0].prtf[0]
-                  : null}</td>
+                  ? this.state.sd[0].prtf[0].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[0].prtf[1]
-                  ? this.state.sd[0].prtf[1]
-                  : null}</td>
+                  ? this.state.sd[0].prtf[1].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[0].prtf[2]
-                  ? this.state.sd[0].prtf[2]
-                  : null}</td>
+                  ? this.state.sd[0].prtf[2].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[0].length >= 4
-                  ? this.state.sd[0].prtf[3]
-                  : null}</td>
-                <td>{mmult(this.state.avg, this.state.sd[0].prtf)}</td>
+                  ? this.state.sd[0].prtf[3].toFixed(3)
+                  : '*'}</td>
+                {/*er*/}
+                <td>{(mmult(this.state.avg, this.state.sd[0].prtf)).toFixed(3)}</td>
+                {/*Variance*/}
                 <td>{this.state.sd[0].variance
-                  ? this.state.sd[0].variance
-                  : null}</td>
-                <td>{this.state.sd[0].sd ? this.state.sd[0].sd : null}</td>
-                <td>sr</td>
+                  ? this.state.sd[0].variance.toFixed(3)
+                  : '*'}</td>
+                {/*sd*/}
+                <td>{this.state.sd[0].sd ? this.state.sd[0].sd.toFixed(3) : '*'}</td>
+                {/*sr*/}
+                <td>{((mmult(this.state.avg, this.state.sd[0].prtf) - this.state.risk)/this.state.sd[0].sd).toFixed(3)}</td>
               </tr>
               <tr>
                 <td>MVE</td>
                 <td>{this.state.sd[1].prtf[0]
-                  ? this.state.sd[1].prtf[0]
-                  : null}</td>
+                  ? this.state.sd[1].prtf[0].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[1].prtf[1]
-                  ? this.state.sd[1].prtf[1]
-                  : null}</td>
+                  ? this.state.sd[1].prtf[1].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[1].prtf[2]
-                  ? this.state.sd[1].prtf[2]
-                  : null}</td>
+                  ? this.state.sd[1].prtf[2].toFixed(3)
+                  : '*'}</td>
                 <td>{this.state.sd[1].length >= 4
-                  ? this.state.sd[1].prtf[3]
-                  : null}</td>
-                <td>{mmult(this.state.avg, this.state.sd[1].prtf)}</td>
+                  ? this.state.sd[1].prtf[3].toFixed(3)
+                  : '*'}</td>
+                <td>{(mmult(this.state.avg, this.state.sd[1].prtf)).toFixed(3)}</td>
                 <td>{this.state.sd[1].variance
-                  ? this.state.sd[1].variance
-                  : null}</td>
-                <td>{this.state.sd[1].sd ? this.state.sd[1].sd : null}</td>
-                <td>sr</td>
+                  ? this.state.sd[1].variance.toFixed(3)
+                  : '*'}</td>
+                <td>{this.state.sd[1].sd ? this.state.sd[1].sd.toFixed(3) : '0'}</td>
+                <td>{((mmult(this.state.avg, this.state.sd[1].prtf) - this.state.risk)/this.state.sd[1].sd).toFixed(3)}</td>
               </tr>
               </tbody>
             </table>
@@ -379,14 +414,8 @@ class Analytics extends Component {
         <div>
           <div>Analytics!</div>
           <button className="analytic" onClick={this.showRes}>
-             (click me)
+            (click me)
           </button>
-          {/*<div>Min: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[0].sd*/}
-          {/*  : this.state.sd}</div>*/}
-          {/*<div>Max: {this.state.sd !== 0*/}
-          {/*  ? this.state.sd[1].sd*/}
-          {/*  : this.state.sd}</div>*/}
           {buyElem}
         </div>
         <hr/>

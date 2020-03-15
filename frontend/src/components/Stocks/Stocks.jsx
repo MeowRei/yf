@@ -27,6 +27,7 @@ class Stocks extends Component {
       from: '',
       to: '',
       period: '',
+      risk: 0,
     };
   }
   
@@ -56,6 +57,8 @@ class Stocks extends Component {
     this.setState({
       data,
     });
+    
+    this.getRisk()
     
   };
   
@@ -130,6 +133,15 @@ class Stocks extends Component {
     }
   };
   
+  getRisk = async () => {
+    const response = await fetch('/risk');
+    const {risk} = await response.json();
+    this.setState({
+      risk
+    })
+    
+  };
+  
   render() {
     
     const fields = [];
@@ -176,7 +188,7 @@ class Stocks extends Component {
         </div>
         
         <div>
-          {this.state.data ?
+          {this.state.data && this.state.risk ?
             <div className={classes.DetailsAndGraph}>
               <div className={classes.BlockInfo}>
                 <StocksTable
@@ -195,6 +207,7 @@ class Stocks extends Component {
                 <Analytics
                   name={Object.keys(this.state.data)}
                   value={Object.values(this.state.data)}
+                  risk={this.state.risk}
                 /></div>
             </div>
             : null}

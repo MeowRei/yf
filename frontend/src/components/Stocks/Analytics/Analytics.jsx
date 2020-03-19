@@ -27,7 +27,7 @@ class Analytics extends Component {
       sdLtest: [],
       sd: 0,
       srMVP: 0,
-      srMVE:0,
+      srMVE: 0,
     };
   }
   
@@ -37,7 +37,7 @@ class Analytics extends Component {
     const source = [];
     const temp = [];
     if (props.value.length > 1) {
-      props.value.forEach((elem, index) => {
+      props.value.map((elem, index) => {
         source.push(elem.map((content, index, array) => {
           if (array.length - 1 !== index) {
             return array[index].adjClose / array[index + 1].adjClose - 1;
@@ -46,7 +46,7 @@ class Analytics extends Component {
         source[index].pop();
       });
     } else {
-      props.value[0].forEach((elem, index, array) => {
+      props.value[0].map((elem, index, array) => {
         if (array.length - 1 !== index) {
           temp.push(array[index].adjClose / array[index + 1].adjClose - 1);
         }
@@ -83,27 +83,12 @@ class Analytics extends Component {
         vcm.push(task1);
       }
     }
-  
-    const risk = Math.pow((1 + (props.risk)),(1/12))-1;
- 
-    
-    // const variant2 = [
-    //   [0.005615179, -0.004727057, 0.001078098, 0.0008552],
-    //   [-0.004727057, 0.041083456, 0.000753167, 0.003287635],
-    //   [0.001078098, 0.000753167, 0.001031119, 0.001278456],
-    // [0.0008552, 0.003287635, 0.001278456, 0.006159359],
-    // ];
-    
-    // if (vcm.length > 1) {
-    //   const task1 = (mmult(variant1, variant2));
-    //   const task2 = mmult(variant1, task1);
-    //   mm.push(Number.parseFloat(task2).toFixed(4));
-    //   sd.push(Number.parseFloat(Math.sqrt(task2)).toFixed(4));
-    // }
+    //=(1+A5)^(1/12)-1
+    const risk = Math.pow((1 + (props.risk / 100)), (1 / 12)) - 1;
+
     //--------------------------------------------------------------
     
     //--------------------------------------------------------------
-    /*Expected Returns*/
     
     //Set state-----------------------------------
     return {
@@ -119,8 +104,7 @@ class Analytics extends Component {
   }
   
   showRes = () => {
-  
-  
+    
     if (this.state.vcm.length === 2) {
       this.showResultM();
     }
@@ -133,17 +117,22 @@ class Analytics extends Component {
       this.showResultL();
     }
     
-    
-    
-    
   };
   
-  // showRisk = () => {
-  //   const risk = Math.pow(1 + this.props.risk,((1/12)-1));
-  //   this.setState({
-  //     risk
-  //   })
-  // };
+  showRisk = (sd) => {
+    const risk = ((mmult(this.state.avg, sd.prtf) -
+      this.state.risk) / sd.sd).toFixed(3);
+    
+    // console.log(mmult(this.state.avg, sd.prtf));
+    // console.log('Props',this.props.value);
+    // console.log('State',this.state.source);
+    // console.log(this.state.avg);
+    // console.log(sd.prtf);
+    // console.log(this.state.risk);
+    // console.log(sd.sd);
+    
+    return risk;
+  };
   
   showResultM = () => {
     const tempArr = [1, 0, 0, 0];
@@ -156,7 +145,6 @@ class Analytics extends Component {
     } else if (tempArr.length > this.state.vcm.length) {
       tempArr.splice(this.state.vcm.length, tempArr.length);
     }
-    
     
     const two = value2(tempArr, this.state.vcm);
     this.setState({
@@ -189,11 +177,8 @@ class Analytics extends Component {
         return all[iMax];
       }
       
-      
       const threeMin = min(three1, three2, three3);
       const threeMax = max(three1, three2, three3);
-  
-
       
       this.setState({
         sd: [threeMin[0], threeMax[1]],
@@ -230,9 +215,6 @@ class Analytics extends Component {
       
       const fourMin = min(four1, four2, four3, four4);
       const fourMax = max(four1, four2, four3, four4);
-  
-
-      
       
       this.setState({
         sd: [fourMin[0], fourMax[1]],
@@ -253,10 +235,10 @@ class Analytics extends Component {
     });
   };
   
-  
   render() {
     // console.log(this.state);
-    // const risk = Math.pow((1 + (0.0201)),(1/12))-1;
+    // console.log(this.props.risk);
+    // const risk = Math.pow((1 + (2.01 / 100)), (1 / 12)) - 1;
     // console.log(risk);
     // console.log(this.state.sd[0].prtf && 0);
     // console.log(this.state.avg);
@@ -293,7 +275,9 @@ class Analytics extends Component {
           tempData.push
           (<td
             key={i + j + 1000}
-          >{this.state.vcm[i][j] ? (this.state.vcm[i][j]).toFixed(3) : null}</td>);
+          >{this.state.vcm[i][j]
+            ? (this.state.vcm[i][j]).toFixed(3)
+            : null}</td>);
         }
         tbodyData.push(tempData);
       }
@@ -310,15 +294,19 @@ class Analytics extends Component {
           {this.props.name.length > 1 ? tbodyData[i] : '0'}
         </tr>);
     }
-    
     //----------Matrix-----------
-    
-    //----------Risk-----------
-    
-
-    
-    //----------Risk-----------
-    
+    //----------MVP-MVE----------
+    function mvEP (sd) {
+      const prtf = [];
+      for (let i = 0; i < sd.prtf.length; i++) {
+        prtf.push(
+          <td>{sd.prtf[i]}</td>
+        )
+      }
+      return prtf;
+    }
+    //----------MVP-MVE----------
+  
     return (
       <div>
         <hr/>
@@ -349,10 +337,7 @@ class Analytics extends Component {
               <thead>
               <tr>
                 <th></th>
-                <th>{this.props.name[0]}</th>
-                <th>{this.props.name[1]}</th>
-                <th>{this.props.name[2]}</th>
-                <th>{this.props.name[3]}</th>
+                {theadMatrix}
                 <th>Er</th>
                 <th>Variance</th>
                 <th>Sd</th>
@@ -362,49 +347,36 @@ class Analytics extends Component {
               <tbody>
               <tr>
                 <td>MVP</td>
-                <td>{this.state.sd[0].prtf[0]
-                  ? this.state.sd[0].prtf[0].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[0].prtf[1]
-                  ? this.state.sd[0].prtf[1].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[0].prtf[2]
-                  ? this.state.sd[0].prtf[2].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[0].length >= 4
-                  ? this.state.sd[0].prtf[3].toFixed(3)
-                  : '*'}</td>
-                {/*er*/}
-                <td>{(mmult(this.state.avg, this.state.sd[0].prtf)).toFixed(3)}</td>
+                {mvEP(this.state.sd[0])}
+                <td>{(mmult(this.state.avg, this.state.sd[0].prtf)).toFixed(
+                  3)}</td>
                 {/*Variance*/}
                 <td>{this.state.sd[0].variance
                   ? this.state.sd[0].variance.toFixed(3)
-                  : '*'}</td>
+                  : '0'}</td>
                 {/*sd*/}
-                <td>{this.state.sd[0].sd ? this.state.sd[0].sd.toFixed(3) : '*'}</td>
+                <td>{this.state.sd[0].sd
+                  ? this.state.sd[0].sd.toFixed(3)
+                  : '0'}</td>
                 {/*sr*/}
-                <td>{((mmult(this.state.avg, this.state.sd[0].prtf) - this.state.risk)/this.state.sd[0].sd).toFixed(3)}</td>
+                <td>{this.showRisk(this.state.sd[0])}</td>
               </tr>
               <tr>
                 <td>MVE</td>
-                <td>{this.state.sd[1].prtf[0]
-                  ? this.state.sd[1].prtf[0].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[1].prtf[1]
-                  ? this.state.sd[1].prtf[1].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[1].prtf[2]
-                  ? this.state.sd[1].prtf[2].toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[1].length >= 4
-                  ? this.state.sd[1].prtf[3].toFixed(3)
-                  : '*'}</td>
-                <td>{(mmult(this.state.avg, this.state.sd[1].prtf)).toFixed(3)}</td>
+                {mvEP(this.state.sd[1])}
+                <td>{(mmult(this.state.avg, this.state.sd[1].prtf)).toFixed(
+                  3)}</td>
                 <td>{this.state.sd[1].variance
                   ? this.state.sd[1].variance.toFixed(3)
-                  : '*'}</td>
-                <td>{this.state.sd[1].sd ? this.state.sd[1].sd.toFixed(3) : '0'}</td>
-                <td>{((mmult(this.state.avg, this.state.sd[1].prtf) - this.state.risk)/this.state.sd[1].sd).toFixed(3)}</td>
+                  : '0'}</td>
+                <td>{this.state.sd[1].sd
+                  ? this.state.sd[1].sd.toFixed(3)
+                  : '0'}</td>
+                <td>{
+                  // ((mmult(this.state.avg, this.state.sd[1].prtf) -
+                  // this.state.risk) / this.state.sd[1].sd).toFixed(3)
+                  this.showRisk(this.state.sd[1])
+                }</td>
               </tr>
               </tbody>
             </table>

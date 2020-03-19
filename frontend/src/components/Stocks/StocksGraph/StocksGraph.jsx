@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {LineChart, XAxis, Tooltip, CartesianGrid, Line, YAxis} from 'recharts';
 import moment from 'moment';
 
-// import classes from './StocksGraph.module.css'
 
 class StocksGraph extends Component {
   constructor(props) {
@@ -21,19 +20,19 @@ class StocksGraph extends Component {
         {this.props.value && this.props.value.map((elem, index) => {
           const date02 = [...elem];
           
-          if (this.props.period === 'm' &&
-            (Object.values(date02[0])[0][8] !== '0' ||
-              Object.values(date02[0])[0][9] !== '1')) {
-            date02.splice(0, 1);
-          }
-          
-          date02.forEach(content => {
+          // if (this.props.period === 'm' &&
+          //   (Object.values(date02[0])[0][8] !== '0' ||
+          //     Object.values(date02[0])[0][9] !== '1')) {
+          //   date02.splice(0, 1);
+          // }
+          // console.log(date02);
+          date02.map(content => {
               if (this.props.period === 'm') {
-                content['date'] = moment(Object.values(content)[0]).format('MM');
-              } else if (this.props.period === 'w') {
-                content['date'] = moment(Object.values(content)[0]).format('MM');
-              } else {
-                content['date'] = moment(Object.values(content)[0]).format('MM-DD');
+                content['date'] = content.newDate = moment(Object.values(content)[0]).format('MM');
+              // } else if (this.props.period === 'w') {
+              //   content['date'] = moment(Object.values(content)[0]).format('MM');
+              // } else {
+              //   content['date'] = moment(Object.values(content)[0]).format('MM-DD');
               }
             },
           );
@@ -46,7 +45,7 @@ class StocksGraph extends Component {
             >
               <CartesianGrid vertical={false}/>
               
-              <XAxis dataKey="date"
+              <XAxis dataKey="newDate"
                 // label="Date"
               />
               <YAxis

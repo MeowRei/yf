@@ -28,7 +28,6 @@ class StocksTable extends Component {
         differ.push(classes.red);
       }
     }
-    // console.log(this.props.name)
     return (
       <div>
         <div className={classes.table}>
@@ -42,13 +41,6 @@ class StocksTable extends Component {
             
             <div className={classes.adjCloseCol}>
               {this.props.value.map((elem, index1) => {
-                
-                // if (this.props.period === 'm' &&
-                //   (Object.values(elem[0])[0][8] !== '0' ||
-                //     Object.values(elem[0])[0][9] !== '1')) {
-                //   elem.splice(0,1)
-                // }
-                
                 return (
                   <div key={index1} className={classes.adjClose}>
                     {elem.map((content, index2, array) => {
@@ -74,19 +66,12 @@ class StocksTable extends Component {
                         </div>
                       );
                     })}
-                  
                   </div>
-                  
                 );
               })}
             </div>
           </div>
-
         </div>
-        {/*<Analytics*/}
-        {/*   name={Object.values(this.props.name)}*/}
-        {/*   value={Object.values(this.props.value)}*/}
-        {/* />*/}
       </div>
     );
   }

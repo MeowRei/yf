@@ -55,56 +55,18 @@ function mmult(arr1, arr2) {
   }
 }
 
-// function value1(arr1, arr2) {
-//   const min = {
-//     variance: 0,
-//     sd: 5000,
-//     prtf: [],
-//   };
-//
-//   const max = {
-//     variance: 0,
-//     sd: 0,
-//     prtf: [],
-//   };
-//
-//   let workArr = [...arr1];
-//
-//   for (let i = 0; i < workArr.length; i++) {
-//     const task1 = (mmult(workArr, arr2));
-//     const task2 = mmult(workArr, task1); //Variance
-//     const task3 = Math.sqrt(task2); //SD
-//
-//     if (min.sd > task3) {
-//       min.variance = task2;
-//       min.sd = task3;
-//       min.prtf = [...workArr];
-//     }
-//
-//     if (max.sd < task3) {
-//       max.variance = task2;
-//       max.sd = task3;
-//       max.prtf = [...workArr];
-//     }
-//
-//     if (i < workArr.length - 1) {
-//       workArr[i] = 0;
-//       workArr[i + 1] = 1;
-//     }
-//   }
-//   return [min, max];
-// }
-
-function value2(arr1, arr2) {
+function value2(arr1, arr2, avg, risk) {
   const min = {
     variance: 0,
     sd: 5000,
     prtf: [],
   };
   
+  
   const max = {
     variance: 0,
     sd: 0,
+    sr: 0,
     prtf: [],
   };
   
@@ -122,6 +84,9 @@ function value2(arr1, arr2) {
         const task1 = (mmult(tempArr, arr2));
         const task2 = mmult(tempArr, task1);
         const task3 = Math.sqrt(task2); //SD
+        const task4 = mmult(avg,tempArr); //Er
+        const task5 = ((task4-risk)/task3); //Sr
+
         
         if (min.sd > task3) {
           min.variance = task2;
@@ -129,9 +94,10 @@ function value2(arr1, arr2) {
           min.prtf = [...tempArr];
         }
         
-        if (max.sd < task3) {
+        if (max.sr < task5) {
           max.variance = task2;
           max.sd = task3;
+          max.sr = task5;
           max.prtf = [...tempArr];
         }
         
@@ -218,7 +184,7 @@ function value2(arr1, arr2) {
 // }
 
 
-function value31(arr) {
+function value31(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -229,6 +195,7 @@ function value31(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr: 0,
     prtf: [],
   };
   // const mainArr = [0.0001, 0.0001, 0.9997];
@@ -242,6 +209,8 @@ function value31(arr) {
       const task1 = (mmult(workArr, arr));
       const task2 = mmult(workArr, task1);
       const task3 = Math.sqrt(task2); //SD
+      const task4 = mmult(avg,workArr); //Er
+      const task5 = ((task4-risk)/task3); //Sr
       
       if (min.sd > task3) {
         min.variance = task2;
@@ -249,9 +218,10 @@ function value31(arr) {
         min.prtf = [...workArr];
       }
       
-      if (max.sd < task3) {
+      if (max.sr < task5) {
         max.variance = task2;
         max.sd = task3;
+        max.sr = task5;
         max.prtf = [...workArr];
       }
       workArr[1] = Number(
@@ -267,7 +237,7 @@ function value31(arr) {
   return [min, max];
 }
 
-function value32(arr) {
+function value32(arr,avg, risk) {
   
   const min = {
     variance: 0,
@@ -278,6 +248,7 @@ function value32(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr:0,
     prtf: [],
   };
   // const mainArr = [0.0001, 0.9997, 0.0001];
@@ -291,16 +262,19 @@ function value32(arr) {
       const task1 = (mmult(workArr, arr));
       const task2 = mmult(workArr, task1);
       const task3 = Math.sqrt(task2); //SD
-      
+      const task4 = mmult(avg,workArr); //Er
+      const task5 = ((task4-risk)/task3); //Sr
+  
       if (min.sd > task3) {
         min.variance = task2;
         min.sd = task3;
         min.prtf = [...workArr];
       }
-      
-      if (max.sd < task3) {
+  
+      if (max.sr < task5) {
         max.variance = task2;
         max.sd = task3;
+        max.sr = task5;
         max.prtf = [...workArr];
       }
       workArr[0] = Number(
@@ -318,7 +292,7 @@ function value32(arr) {
   return [min, max];
 }
 
-function value33(arr) {
+function value33(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -329,6 +303,7 @@ function value33(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr:0,
     prtf: [],
   };
   // const mainArr = [0.9997, 0.0001, 0.0001];
@@ -342,16 +317,19 @@ function value33(arr) {
       const task1 = (mmult(workArr, arr));
       const task2 = mmult(workArr, task1);
       const task3 = Math.sqrt(task2); //SD
-      
+      const task4 = mmult(avg,workArr); //Er
+      const task5 = ((task4-risk)/task3); //Sr
+  
       if (min.sd > task3) {
         min.variance = task2;
         min.sd = task3;
         min.prtf = [...workArr];
       }
-      
-      if (max.sd < task3) {
+  
+      if (max.sr < task5) {
         max.variance = task2;
         max.sd = task3;
+        max.sr = task5;
         max.prtf = [...workArr];
       }
       workArr[2] = Number(
@@ -367,15 +345,7 @@ function value33(arr) {
   return [min, max];
 }
 
-// let count = 0;
-// function tt(arr) {
-//   if (count < 11000) {
-//     console.log(arr)
-//   }
-//   count++
-// }
-
-function value41(arr) {
+function value41(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -386,6 +356,7 @@ function value41(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr: 0,
     prtf: [],
   };
   // const mainArr = [0.997, 0.001, 0.001, 0.001];
@@ -402,16 +373,19 @@ function value41(arr) {
         const task1 = (mmult(simpleArr, arr));
         const task2 = mmult(simpleArr, task1);
         const task3 = Math.sqrt(task2); //SD
-
+        const task4 = mmult(avg,simpleArr); //Er
+        const task5 = ((task4-risk)/task3); //Sr
+  
         if (min.sd > task3) {
           min.variance = task2;
           min.sd = task3;
           min.prtf = [...simpleArr];
         }
-
-        if (max.sd < task3) {
+  
+        if (max.sr < task5) {
           max.variance = task2;
           max.sd = task3;
+          max.sr = task5;
           max.prtf = [...simpleArr];
         }
         simpleArr[3] = Number(
@@ -436,7 +410,7 @@ function value41(arr) {
   return [min, max];
 }
 
-function value42(arr) {
+function value42(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -447,6 +421,7 @@ function value42(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr:0,
     prtf: [],
   };
   // const mainArr = [0.001, 0.997, 0.001, 0.001];
@@ -463,16 +438,19 @@ function value42(arr) {
         const task1 = (mmult(simpleArr, arr));
         const task2 = mmult(simpleArr, task1);
         const task3 = Math.sqrt(task2); //SD
-        
+        const task4 = mmult(avg,simpleArr); //Er
+        const task5 = ((task4-risk)/task3); //Sr
+  
         if (min.sd > task3) {
           min.variance = task2;
           min.sd = task3;
           min.prtf = [...simpleArr];
         }
-        
-        if (max.sd < task3) {
+  
+        if (max.sr < task5) {
           max.variance = task2;
           max.sd = task3;
+          max.sr = task5;
           max.prtf = [...simpleArr];
         }
         simpleArr[0] = Number(
@@ -497,7 +475,7 @@ function value42(arr) {
   return [min, max];
 }
 
-function value43(arr) {
+function value43(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -508,6 +486,7 @@ function value43(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr:0,
     prtf: [],
   };
   // const mainArr = [0.997, 0.001, 0.001, 0.001];
@@ -524,16 +503,19 @@ function value43(arr) {
         const task1 = (mmult(simpleArr, arr));
         const task2 = mmult(simpleArr, task1);
         const task3 = Math.sqrt(task2); //SD
-        
+        const task4 = mmult(avg,simpleArr); //Er
+        const task5 = ((task4-risk)/task3); //Sr
+  
         if (min.sd > task3) {
           min.variance = task2;
           min.sd = task3;
           min.prtf = [...simpleArr];
         }
-        
-        if (max.sd < task3) {
+  
+        if (max.sr < task5) {
           max.variance = task2;
           max.sd = task3;
+          max.sr = task5;
           max.prtf = [...simpleArr];
         }
         simpleArr[1] = Number(
@@ -558,7 +540,7 @@ function value43(arr) {
   return [min, max];
 }
 
-function value44(arr) {
+function value44(arr,avg,risk) {
   
   const min = {
     variance: 0,
@@ -569,6 +551,7 @@ function value44(arr) {
   const max = {
     variance: 0,
     sd: 0,
+    sr:0,
     prtf: [],
   };
   // const mainArr = [0.997, 0.001, 0.001, 0.001];
@@ -585,16 +568,19 @@ function value44(arr) {
         const task1 = (mmult(simpleArr, arr));
         const task2 = mmult(simpleArr, task1);
         const task3 = Math.sqrt(task2); //SD
-        
+        const task4 = mmult(avg,simpleArr); //Er
+        const task5 = ((task4-risk)/task3); //Sr
+  
         if (min.sd > task3) {
           min.variance = task2;
           min.sd = task3;
           min.prtf = [...simpleArr];
         }
-        
-        if (max.sd < task3) {
+  
+        if (max.sr < task5) {
           max.variance = task2;
           max.sd = task3;
+          max.sr = task5;
           max.prtf = [...simpleArr];
         }
         simpleArr[2] = Number(

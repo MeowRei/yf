@@ -127,8 +127,11 @@ class Stocks extends Component {
   
   delInputStock = () => {
     if (this.state.fieldsCount > 1) {
+      const newSymbol = this.state.symbol;
+      newSymbol[`symbol${this.state.fieldsCount}`] = '';
       this.setState({
         fieldsCount: this.state.fieldsCount - 1,
+        symbol: newSymbol,
       });
     }
   };

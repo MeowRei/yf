@@ -103,6 +103,7 @@ class Analytics extends Component {
     };
   }
   
+  
   showRes = () => {
     
     if (this.state.vcm.length === 2) {
@@ -122,15 +123,6 @@ class Analytics extends Component {
   showRisk = (sd) => {
     const risk = ((mmult(this.state.avg, sd.prtf) -
       this.state.risk) / sd.sd).toFixed(3);
-    
-    // console.log(mmult(this.state.avg, sd.prtf));
-    // console.log('Props',this.props.value);
-    // console.log('State',this.state.source);
-    // console.log(this.state.avg);
-    // console.log(sd.prtf);
-    // console.log(this.state.risk);
-    // console.log(sd.sd);
-    
     return risk;
   };
   
@@ -146,7 +138,7 @@ class Analytics extends Component {
       tempArr.splice(this.state.vcm.length, tempArr.length);
     }
     
-    const two = value2(tempArr, this.state.vcm);
+    const two = value2(tempArr, this.state.vcm,this.state.avg,this.state.risk);
     this.setState({
       sd: two,
     });
@@ -157,9 +149,9 @@ class Analytics extends Component {
     
     if (this.state.vcm.length === 3) {
       
-      const three1 = value31(this.state.vcm);
-      const three2 = value32(this.state.vcm);
-      const three3 = value33(this.state.vcm);
+      const three1 = value31(this.state.vcm,this.state.avg,this.state.risk);
+      const three2 = value32(this.state.vcm,this.state.avg,this.state.risk);
+      const three3 = value33(this.state.vcm,this.state.avg,this.state.risk);
       
       function min(arr1, arr2, arr3) {
         const all = [arr1, arr2, arr3];
@@ -171,9 +163,9 @@ class Analytics extends Component {
       
       function max(arr1, arr2, arr3) {
         const all = [arr1, arr2, arr3];
-        const allMaxSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd];
+        const allMaxSd = [arr1[1].sr, arr2[1].sr, arr3[1].sr];
         const iMax = allMaxSd.indexOf(
-          Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd));
+          Math.max(arr1[1].sr, arr2[1].sr, arr3[1].sr));
         return all[iMax];
       }
       
@@ -192,10 +184,10 @@ class Analytics extends Component {
     
     if (this.state.vcm.length === 4) {
       
-      const four1 = value41(this.state.vcm);
-      const four2 = value42(this.state.vcm);
-      const four3 = value43(this.state.vcm);
-      const four4 = value44(this.state.vcm);
+      const four1 = value41(this.state.vcm,this.state.avg,this.state.risk);
+      const four2 = value42(this.state.vcm,this.state.avg,this.state.risk);
+      const four3 = value43(this.state.vcm,this.state.avg,this.state.risk);
+      const four4 = value44(this.state.vcm,this.state.avg,this.state.risk);
       
       function min(arr1, arr2, arr3, arr4) {
         const all = [arr1, arr2, arr3, arr4];
@@ -207,9 +199,9 @@ class Analytics extends Component {
       
       function max(arr1, arr2, arr3, arr4) {
         const all = [arr1, arr2, arr3, arr4];
-        const allMaxSd = [arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd];
+        const allMaxSd = [arr1[1].sr, arr2[1].sr, arr3[1].sr, arr4[1].sr];
         const iMax = allMaxSd.indexOf(
-          Math.max(arr1[1].sd, arr2[1].sd, arr3[1].sd, arr4[1].sd));
+          Math.max(arr1[1].sr, arr2[1].sr, arr3[1].sr, arr4[1].sr));
         return all[iMax];
       }
       
@@ -361,6 +353,7 @@ class Analytics extends Component {
                 {/*sr*/}
                 <td>{this.showRisk(this.state.sd[0])}</td>
               </tr>
+              {this.state.sd[1].sd > 0 && this.state.sd[1].sr > 0 ?
               <tr>
                 <td>MVE</td>
                 {mvEP(this.state.sd[1])}
@@ -373,11 +366,10 @@ class Analytics extends Component {
                   ? this.state.sd[1].sd.toFixed(3)
                   : '0'}</td>
                 <td>{
-                  // ((mmult(this.state.avg, this.state.sd[1].prtf) -
-                  // this.state.risk) / this.state.sd[1].sd).toFixed(3)
-                  this.showRisk(this.state.sd[1])
+                  this.state.sd[1].sr.toFixed(3) > 0 ?this.state.sd[1].sr.toFixed(3) : null
                 }</td>
               </tr>
+                : null}
               </tbody>
             </table>
             : null}
